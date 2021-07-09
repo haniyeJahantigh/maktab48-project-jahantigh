@@ -1,30 +1,47 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
+import Backdrop from '@material-ui/core/Backdrop';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import { makeStyles } from '@material-ui/core/styles';
 
-function withLoading(WrappedComponent,api) {
+const useStyles = makeStyles((theme) => ({
+    backdrop: {
+      zIndex: theme.zIndex.drawer + 1,
+      color: '#fff',
+    },
+  }));
+function withLoading(WrappedComponent, api) {
+  const WithLoadingComponent = (props) => {
+    const [isLoading, setIsLoading] = useState(true);
+    const [data, setData] = useState([]);
+    const classes = useStyles();
+    const [open, setOpen] = React.useState(true);
 
-    const WithLoadingComponent=(props)=>{
-        const [isLoading,setIsLoading]=useState(true);
-        const [data,setData]=useState([]);
+    useEffect(() => {
+      fetch(api)
+        .then((response) => response.json())
+        .then((json) => {
+          // console.log(json);
+          setIsLoading(false);
+          setOpen(!open)
+          setData(json);
+        });
+    }, []);
+
+    if (isLoading) {
         
-        useEffect(()=>{
+        return (
+        <Backdrop className={classes.backdrop} open={open} >
+        <CircularProgress color="inherit" />
+       <p> &nbsp;&nbsp; loading</p>
+      </Backdrop>
+      );
+    } else {
+      return <WrappedComponent data={data} {...props} />;
+    }
+  };
 
-            fetch(api)
-                .then((response) => response.json())
-                .then((json) => {
-                    // console.log(json);
-                    setIsLoading(false);
-                    setData(json)
-                });
-        },[]) ;
-
-
-        if (isLoading){
-            return <div style={{width:"100%" , display:"flex" , justifyContent:"center" , alignItems:"center" , height:"100%"}}>isLoading</div>
-        } else{
-            return <WrappedComponent data={data} {...props}  />
-        }
-    };
-
-    return WithLoadingComponent;
+  return WithLoadingComponent;
 }
-export default withLoading
+export default withLoading;
+
+

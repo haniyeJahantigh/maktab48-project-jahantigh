@@ -28,7 +28,7 @@ export default function TabBar() {
 
   const handleManage=(e)=>{
     e.preventDefault();
-    history.push("/dashboard/manage");
+    history.push("/manage");
     console.log("manage");
   }
   const handleStock=(e)=>{
