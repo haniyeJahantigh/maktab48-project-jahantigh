@@ -3,6 +3,7 @@ import { Router, Switch, Route } from "react-router-dom";
 import React from "react";
 import SignIn from "./components/SignIn";
 import Header from './components/Header';
+import Layout from './components/dashboard/Layout'
 
 function App() {
   return (
@@ -11,7 +12,7 @@ function App() {
         <Switch>
           <Route path="/" exact component={Header} />
           <Route path="/login" exact component={SignIn} />
-          {/* <Route path="/dashboard" exact component={Dashboard} /> */}
+          <Route path="/dashboard/manage" exact component={Layout} />
         </Switch>
       </React.Fragment>
     </div>
