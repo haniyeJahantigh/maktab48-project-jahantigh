@@ -51,8 +51,9 @@ export default function SignIn({}) {
     if ((username, password)) {
       login(username, password)
         .then((res) => {
-          localStorage.setItem("token", res.token);
-          history.push("/dashboard/manage");
+          console.log(res);
+          localStorage.setItem("token", res.data.token);
+          history.push("/dashboard");
           console.log("token");
         })
         .catch((err) => console.error(err));

@@ -7,16 +7,16 @@ import AdminHeader from "./AdminHeader";
 import { makeStyles } from "@material-ui/core/styles";
 
 
-function Layout() {
+function Layout(props) {
     
   return (
     <div >
       <React.Fragment>
-          <AdminHeader />
+        <AdminHeader />
         <Switch>
-          <Route path="/dashboard/manage" exact component={Manage} />
-          <Route path="/dashboard/stock" exact component={StockPrice} />
-          <Route path="/dashboard/orders" exact component={Orders} />
+          <Route path={props.match.path + "/manage"} exact component={Manage} />
+          <Route path={props.match.path + "/stock"} exact component={StockPrice} />
+          <Route path={props.match.path + "/orders"} exact component={Orders} />
         </Switch>
       </React.Fragment>
     </div>

@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useEffect} from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
 import Backdrop from "@material-ui/core/Backdrop";
@@ -53,23 +53,25 @@ const category = [
   },
 ];
 
-export default function AddModal({ open, setOpen, props }) {
+export default function EditModal({ openEdit, setOpenEdit, props,setProduct,product}) {
   const classes = useStyles();
   const [currency, setCurrency] = React.useState("EUR");
+  
   //   const [open, setOpen] = React.useState(false);
   //   const [close, setClose] = React.useState(false);
   const handleChange = (event) => {
     setCurrency(event.target.value);
   };
   const handleClose = () => {
-    setOpen(false);
+    setOpenEdit(false);
   };
 
   const handleAddProduct=()=>{
-    setOpen(false);
+    setOpenEdit(false);
     addDatafetch();
     console.log('add new pro');
   }
+console.log(product);
 
   return (
     <ThemeProvider theme={theme}>
@@ -78,7 +80,7 @@ export default function AddModal({ open, setOpen, props }) {
           aria-labelledby="transition-modal-title"
           aria-describedby="transition-modal-description"
           className={classes.modal}
-          open={open}
+          open={openEdit}
           onClose={handleClose}
           closeAfterTransition
           BackdropComponent={Backdrop}
@@ -87,28 +89,28 @@ export default function AddModal({ open, setOpen, props }) {
             timeout: 500,
           }}
         >
-          <Fade in={open} dir="rtl">
+          <Fade in={openEdit} dir="rtl">
             <Container maxWidth="sm" dir="rtl">
               <div className={classes.paper}>
                 <Grid container spacing={3}>
                   <Grid item xs={9}>
-                    <Typography>افزودن کالا</Typography>
+                    <Typography>ادیت کالا</Typography>
                   </Grid>
                   <Grid item xs={3}>
                     <CancelIcon onClick={handleClose} />
                   </Grid>
-                  
-                  <Grid item xs={12}  maxWidth="lg">
+                  <Grid container spacing={3}>
+                  <Grid item xs={12} sm={9} maxWidth="lg">
                     <Input
                       label="تصویر کالا"
                       type="file"
-                      accept="image/*"
+                      accessKey="image"
                       id="outlined-size-small"
                       variant="outlined"
                       size="small"
                       fullWidth
                     />
-                  
+                  </Grid>
                   </Grid>
                   <Grid item xs={12} maxWidth="lg">
                     <TextField
@@ -117,6 +119,7 @@ export default function AddModal({ open, setOpen, props }) {
                       variant="outlined"
                       size="small"
                       fullWidth
+                    //   defaultValue={product.title}
                     />
                   </Grid>
 
@@ -130,12 +133,9 @@ export default function AddModal({ open, setOpen, props }) {
                       onChange={handleChange}
                       helperText="Please select your category"
                       variant="outlined"
+                    //   defaultValue={product.category}
                     >
-                      {category.map((option) => (
-                        <MenuItem key={option.value} value={option.value}>
-                          {option.label}
-                        </MenuItem>
-                      ))}
+                      
                     </TextField>
                   </Grid>
                   <Grid item xs={12} maxWidth="lg">
@@ -146,6 +146,7 @@ export default function AddModal({ open, setOpen, props }) {
                       rows={4}
                       variant="outlined"
                       fullWidth
+                    //   defaultValue={product.description}
                     />
                   </Grid>
                   <Grid

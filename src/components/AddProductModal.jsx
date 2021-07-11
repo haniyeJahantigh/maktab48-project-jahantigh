@@ -6,7 +6,25 @@ const AddProductModal = () => {
 
     return (
         <div>
-           <p>افزودن/ویرایش کالا</p>
+           <div>
+                <h1>LogOut</h1>
+                <p>are you sure?</p>
+                <button
+        onClick={() => {
+          console.log("logout");
+          handleModal();
+        }}
+      >
+        Yes
+      </button>
+      <button
+        onClick={() => {
+          handleModal();
+        }}
+      >
+        No
+      </button>
+            </div>
         </div>
     )
 }

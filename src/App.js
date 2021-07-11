@@ -4,6 +4,9 @@ import React from "react";
 import SignIn from "./components/SignIn";
 import Header from './components/Header';
 import Layout from './components/dashboard/Layout'
+import { ProtectedRoute } from './ProtectedRoute'
+import NotFound from "./pages/NotFound";
+
 
 function App() {
   return (
@@ -12,7 +15,9 @@ function App() {
         <Switch>
           <Route path="/" exact component={Header} />
           <Route path="/login" exact component={SignIn} />
-          <Route path="/dashboard/manage" exact component={Layout} />
+          <ProtectedRoute path="/dashboard"  component={Layout} />
+
+          <Route  path="*"  component={NotFound}/>
         </Switch>
       </React.Fragment>
     </div>
