@@ -68,10 +68,10 @@ export default function EditModal({ openEdit, setOpenEdit, props,setProduct,prod
 
   const handleAddProduct=()=>{
     setOpenEdit(false);
-    addDatafetch();
+    // addDatafetch();
     console.log('add new pro');
   }
-console.log(product);
+// console.log(product);
 
   return (
     <ThemeProvider theme={theme}>

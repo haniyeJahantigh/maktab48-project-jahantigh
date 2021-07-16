@@ -5,7 +5,7 @@ import Paper from "@material-ui/core/Paper";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
-import TableContainer from "@material-ui/core/TableContainer";
+import { TableContainer, MenuItem } from "@material-ui/core";
 import TableHead from "@material-ui/core/TableHead";
 import { Typography, Grid } from "@material-ui/core";
 import TablePagination from "@material-ui/core/TablePagination";
@@ -18,8 +18,9 @@ import Container from "@material-ui/core/Container";
 import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from "@material-ui/icons/Delete";
 import Avatar from "@material-ui/core/Avatar";
-import EditModal from '../EditModal'
+import EditModal from "../EditModal";
 import AddModal from "./AddModal";
+import { ArrowDropDown } from "@material-ui/icons";
 
 const theme = createMuiTheme({
   direction: "rtl",
@@ -60,19 +61,14 @@ const useStyles = makeStyles({
     margin: " auto",
     marginTop: "20px",
   },
-  image:{
+  image: {
     width: theme.spacing(15),
     height: theme.spacing(20),
-
   },
   container: {
     maxHeight: 440,
   },
 });
-
-/*
- * Fetch a single user by Id
- */
 
 function Manage({ data, ...props }) {
   const classes = useStyles();
@@ -80,29 +76,10 @@ function Manage({ data, ...props }) {
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [open, setOpen] = React.useState(false);
   const [openEdit, setOpenEdit] = React.useState(false);
-  const [product,setProduct]=React.useState();
-
+  const [product, setProduct] = React.useState();
+  const [products, setProducts] = React.useState([]);
 
   let history = useHistory();
-
-  // const fetchTask = async (id) => {
-  //   try {
-  //     const response = await fetch(
-  //       `https://60b4f1e8fe923b0017c8338d.mockapi.io/user/${id}`
-  //     );
-  //     const data = await response.json();
-  //     console.log(response);
-  //     history.push(`/user/${id}`);
-  //     return data;
-  //   } catch (err) {
-  //    alert(err);
-  //   }
-  // };
-
-  //   const handleUser = (e) => {
-  //     console.log(e.target.id);
-  //     fetchTask(e.target.id);
-  //   };
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -116,12 +93,40 @@ function Manage({ data, ...props }) {
   const handleClick = () => {
     setOpen(true);
   };
-  const handleEditModal=(e)=>{
-    setOpenEdit(true);
-    console.log(e.target.id);
-    const id= e.target.id
-    setProduct(data.find(item=>item.id === +id))  
-  }
+  // function handleEditModal(e) {
+  //   // setOpenEdit(true);
+  //   console.log(e);
+  //   // console.log(e.target.id);
+  //   // const id= e.target.id
+  //   // setProduct(data.find(item=>item.id === +id))
+  // }
+  const addProduct = async (product) => {
+    try {
+      const res = await fetch("http://localhost:8000/products", {
+        method: "POST",
+        headers: {
+          "Content-type": "application/json",
+        },
+        body: JSON.stringify(product),
+      });
+      const data = await res.json();
+      console.log("data=",data);
+      console.log("res=",res);
+      setProducts([...products, data]);
+      // return res;
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const handleDelet =async (proId) => {
+    await fetch(`http://localhost:5000/tasks/${proId}` ,{
+      method: "DELETE"
+    })
+   console.log(proId);
+   setProducts(products.filter((product) => product.id !== proId));
+   // or .then((res)=> setTasks(tasks.filter((task) => task.id !== taskId)))
+ };
 
   return (
     <ThemeProvider theme={theme}>
@@ -148,9 +153,8 @@ function Manage({ data, ...props }) {
             </Button>
           </Grid>
           {/* <AddModal open={open} setOpen={setOpen}/> */}
-          <Modal open={open} setOpen={setOpen}/>
-            
-         
+          <Modal open={open} setOpen={setOpen} add={addProduct} />
+
           <Grid item xs={12} className={classes.root}>
             <Paper>
               <TableContainer className={classes.container} dir="rtl">
@@ -181,13 +185,18 @@ function Manage({ data, ...props }) {
                             role="checkbox"
                             tabIndex={-1}
                             key={datas.code}
+                            
                           >
                             <TableCell
                               id={datas.id}
                               key={datas.id}
                               align="right"
                             >
-                              <Avatar src={datas.image} variant="square" className={classes.image}/>
+                              <Avatar
+                                src={datas.image}
+                                variant="square"
+                                className={classes.image}
+                              />
                             </TableCell>
 
                             <TableCell
@@ -209,9 +218,11 @@ function Manage({ data, ...props }) {
                               key={datas.id}
                               align="right"
                             >
-                              <EditIcon onClick={handleEditModal} id={datas.id}/>
-                              <EditModal openEdit={openEdit} setOpenEdit={setOpenEdit} setProduct={setProduct} product={product}/>
-                              <DeleteIcon />
+                              {/* <div onClick={(e) => handleEditModal(e)}> */}
+                                <EditIcon id={datas.id} />
+                              {/* </div> */}
+
+                              <DeleteIcon onClick={handleDelet} id={datas.id}/>
                             </TableCell>
                           </TableRow>
                         );
@@ -229,6 +240,12 @@ function Manage({ data, ...props }) {
                 onChangePage={handleChangePage}
                 onChangeRowsPerPage={handleChangeRowsPerPage}
               />
+              <EditModal
+                openEdit={openEdit}
+                setOpenEdit={setOpenEdit}
+                setProduct={setProduct}
+                product={product}
+              />
             </Paper>
           </Grid>
         </Grid>
@@ -237,4 +254,4 @@ function Manage({ data, ...props }) {
   );
 }
 
-export default withLoading(Manage, "https://fakestoreapi.com/products");
+export default withLoading(Manage, "http://localhost:8000/products");

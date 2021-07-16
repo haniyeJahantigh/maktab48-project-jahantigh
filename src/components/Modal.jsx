@@ -1,20 +1,9 @@
-import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import Modal from "@material-ui/core/Modal";
-import Backdrop from "@material-ui/core/Backdrop";
-import Fade from "@material-ui/core/Fade";
+import React,{useState} from "react";
 import CancelIcon from "@material-ui/icons/Cancel";
-import {
-  Typography,
-  Grid,
-  Button,
-  TextField,
-  MenuItem,
-  Input,
-} from "@material-ui/core";
-import Container from "@material-ui/core/Container";
-import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
-import {addDatafetch} from '../api/addDatafetch'
+import { Typography, Grid,Button,TextField, MenuItem,Input,Modal,Backdrop,Fade,Container} from "@material-ui/core";
+import { createMuiTheme, ThemeProvider,makeStyles } from "@material-ui/core/styles";
+import imageToBase64 from 'image-to-base64/browser';
+// import {addDatafetch} from '../api/addDatafetch'
 
 const theme = createMuiTheme({
   direction: "rtl",
@@ -35,40 +24,57 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const category = [
+  
   {
-    value: "electronics",
-    label: "electronics",
+    value: "لباس مردانه",
+    label: "لباس مردانه",
   },
   {
-    value: "jewelery",
-    label: "jewelery",
-  },
-  {
-    value: "men clothing",
-    label: "men clothing",
-  },
-  {
-    value: "women clothing",
-    label: "women clothing",
+    value: "لباس زنانه",
+    label: "لباس زنانه",
   },
 ];
 
-export default function AddModal({ open, setOpen, props }) {
+export default function AddModal({ open, setOpen, props,add }) {
   const classes = useStyles();
-  const [currency, setCurrency] = React.useState("EUR");
-  //   const [open, setOpen] = React.useState(false);
-  //   const [close, setClose] = React.useState(false);
-  const handleChange = (event) => {
-    setCurrency(event.target.value);
-  };
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [cat, setCat] = useState("");
+  const [imagePro, setImagePro] = useState("");
+
+
+
   const handleClose = () => {
     setOpen(false);
   };
 
-  const handleAddProduct=()=>{
+  const handleAddProduct=(e)=>{
+    e.preventDefault();
     setOpen(false);
-    addDatafetch();
+
+    add({title,description});
+
+    console.log(title);
+    console.log(description);
+
+    setTitle("");
+    setDescription("")
     console.log('add new pro');
+  }
+  const handleImage=(e)=>{
+console.log(e.target.value);
+imageToBase64("e.target.value") // Path to the image
+    .then(
+        (response) => {
+            console.log(response); 
+            setImagePro(response)
+        }
+    )
+    .catch(
+        (error) => {
+            console.log(error); // Logs an error if there was one
+        }
+    )
   }
 
   return (
@@ -107,6 +113,8 @@ export default function AddModal({ open, setOpen, props }) {
                       variant="outlined"
                       size="small"
                       fullWidth
+                      onChange={handleImage}
+
                     />
                   
                   </Grid>
@@ -117,6 +125,8 @@ export default function AddModal({ open, setOpen, props }) {
                       variant="outlined"
                       size="small"
                       fullWidth
+                      value={title}
+                      onChange={(e)=> setTitle(e.target.value)}
                     />
                   </Grid>
 
@@ -126,13 +136,12 @@ export default function AddModal({ open, setOpen, props }) {
                       id="sort"
                       select
                       label="دسته بندی"
-                      value={currency}
-                      onChange={handleChange}
                       helperText="Please select your category"
                       variant="outlined"
+                      onChange={(e)=> setCat(e.target.value)}
                     >
                       {category.map((option) => (
-                        <MenuItem key={option.value} value={option.value}>
+                        <MenuItem key={option.value} value={option.value} >
                           {option.label}
                         </MenuItem>
                       ))}
@@ -146,6 +155,8 @@ export default function AddModal({ open, setOpen, props }) {
                       rows={4}
                       variant="outlined"
                       fullWidth
+                      value={description}
+                      onChange={(e)=>setDescription(e.target.value)}
                     />
                   </Grid>
                   <Grid
