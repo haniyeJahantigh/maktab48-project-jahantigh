@@ -1,5 +1,7 @@
 import React, { useState, useContext, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
+import withLoading from "../../HOC/withLoading";
+
 import {
   Typography,
   Grid,
@@ -33,12 +35,12 @@ const useStyles = makeStyles({
   },
 });
 
-const LimitProduct = ({ data, setData, categoryLimit }) => {
+function CardProduct ({ data,categoryLimit}) {
   const classes = useStyles();
   const LimitData = data?.filter(
     (product) => product.category === categoryLimit
   );
-  const SliceData = LimitData.slice(0, 6);
+  
   return (
     <ThemeProvider theme={theme}>
       <Container maxWidth="md" className={classes.root}>
@@ -49,7 +51,7 @@ const LimitProduct = ({ data, setData, categoryLimit }) => {
           </Typography>
         </Grid>
         <Grid container dir="rtl" spacing={4}>
-        {SliceData?.map((pro) => {
+        {LimitData?.map((pro) => {
           return (
             <Grid
               item
@@ -91,4 +93,5 @@ const LimitProduct = ({ data, setData, categoryLimit }) => {
   );
 };
 
-export default LimitProduct;
+export default withLoading(CardProduct, "http://localhost:8000/products");
+

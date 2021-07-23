@@ -1,10 +1,9 @@
-import { Router, Switch, Route } from "react-router-dom";
+import {Switch, Route } from "react-router-dom";
 import React from "react";
 import Manage from '../components/dashboard/Manage';
 import Orders from '../components/dashboard/Orders';
 import StockPrice from '../components/dashboard/StockPrice';
 import AdminHeader from "../components/dashboard/AdminHeader";
-import { makeStyles } from "@material-ui/core/styles";
 
 
 function AdminLayout(props) {

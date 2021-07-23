@@ -2,6 +2,10 @@ import {Switch, Route } from "react-router-dom";
 import React from "react";
 import Header from "../components/storPage/Header";
 import SideBar from "../components/storPage/ListItem";
+import Main from '../components/storPage/Main'
+import MenPro from '../components/storPage/MenPro'
+import WomenPro from '../components/storPage/WomenPro'
+import Accesory from '../components/storPage/Accesory'
 
 
 function MainPage(props) {
@@ -12,9 +16,10 @@ function MainPage(props) {
         <Header open={open} setOpen={setOpen}/>
         <SideBar open={open} setOpen={setOpen}/>
         <Switch>
-          {/* <Route path={props.match.path + "/manage"} exact component={Manage} />
-          <Route path={props.match.path + "/stock"} exact component={StockPrice} />
-          <Route path={props.match.path + "/orders"} exact component={Orders} /> */}
+          <Route path="/" exact component={Main} />
+          <Route path="/MensProduct" exact component={MenPro} />
+          <Route path="/WomensProduct" exact component={WomenPro} />
+          <Route path="/accesorys" exact component={Accesory} />
         </Switch>
       </React.Fragment>
     </div>

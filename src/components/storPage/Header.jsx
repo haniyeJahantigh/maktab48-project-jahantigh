@@ -19,7 +19,7 @@ import clsx from 'clsx';
 const theme = createMuiTheme({
   direction: "rtl",
 });
-const drawerWidth = 140;
+const drawerWidth = 155;
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -48,6 +48,9 @@ const useStyles = makeStyles((theme) => ({
       duration: theme.transitions.duration.enteringScreen,
     }),
   },
+  toolbar: {
+    paddingRight: 24, // keep right padding when drawer closed
+  },
 }));
 
 const Header = ({open,setOpen}) => {
@@ -68,8 +71,8 @@ const Header = ({open,setOpen}) => {
   return (
     <ThemeProvider theme={theme}>
       <div className={classes.root}>
-      <AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)} dir="rtl">
-          <Toolbar>
+      <AppBar position="fixed" className={clsx(classes.appBar, open && classes.appBarShift)} dir="rtl">
+          <Toolbar className={classes.toolbar}>
           <IconButton
             edge="start"
             color="inherit"

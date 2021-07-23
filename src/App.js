@@ -14,7 +14,7 @@ function App() {
     <div className="App">
       <React.Fragment>
         <Switch>
-          <Route path="/" exact component={MainPage} />
+          <Route path="/"  component={MainPage} />
           <Route path="/login" exact component={SignIn} />
           <ProtectedRoute path="/dashboard"  component={AdminLayout} />
 

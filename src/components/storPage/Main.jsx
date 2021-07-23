@@ -23,23 +23,25 @@ const useStyles = makeStyles({
     width: theme.spacing(15),
     height: theme.spacing(20),
   },
-  container: {
-    maxHeight: 440,
-  },
+//   container: {
+//     maxHeight: 440,
+//   },
 });
 
-function Manage({ data,setData, ...props}) {
+function Main({ data,setData, ...props}) {
   const classes = useStyles();
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
+  
   
   return (
     <ThemeProvider theme={theme}>
       <Container maxWidth="md">
-        <LimitProduct data={data} setData={setData}/>
+      <Typography variant="h6">{data.category}</Typography>
+        <LimitProduct data={data} setData={setData} categoryLimit="لباس مردانه" classes={classes.container}/>
+        <LimitProduct data={data} setData={setData} categoryLimit="لباس زنانه" classes={classes.container}/>
+        <LimitProduct data={data} setData={setData} categoryLimit="کیف و کوله پشتی" classes={classes.container}/>
       </Container>
     </ThemeProvider>
   );
 }
 
-export default withLoading(Manage, "http://localhost:8000/products");
+export default withLoading(Main, "http://localhost:8000/products");

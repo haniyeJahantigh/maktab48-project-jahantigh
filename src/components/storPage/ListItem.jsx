@@ -9,8 +9,11 @@ import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
 import FaceIcon from '@material-ui/icons/Face';
 import InsertEmoticonIcon from '@material-ui/icons/InsertEmoticon';
 import FilterVintageIcon from '@material-ui/icons/FilterVintage';
+import HomeIcon from '@material-ui/icons/Home';
+import {  useHistory } from "react-router-dom";
 
-const drawerWidth = 140;
+
+const drawerWidth = 155;
 const theme = createMuiTheme({
     direction: "rtl",
   });
@@ -46,6 +49,27 @@ const SideBar = ({open,setOpen})=>{
     const handleDrawerClose = () => {
         setOpen(false);
       };
+    const history=useHistory()
+    const handleMen=(e)=>{
+        e.preventDefault();
+        history.push("/MensProduct");
+        console.log("man");
+      }  
+    const handleWomen=(e)=>{
+        e.preventDefault();
+        history.push("/WomensProduct");
+        console.log("woman");
+      }  
+    const handleAccesory=(e)=>{
+        e.preventDefault();
+        history.push("/accesorys");
+        console.log("accesory");
+      }  
+    const handleMain=(e)=>{
+        e.preventDefault();
+        history.push("/");
+        console.log("main");
+      }  
     return(
         <ThemeProvider theme={theme}>   
   <div>
@@ -58,23 +82,31 @@ const SideBar = ({open,setOpen})=>{
         open={open}
       >
         <div className={classes.toolbarIcon}>
+           
           <IconButton onClick={handleDrawerClose}>
             <ChevronRightIcon />
           </IconButton>
+          دسته بندیها
         </div>
-        <ListItem button>
+        <ListItem button onClick={handleMain}>
+        <ListItemIcon>
+        <HomeIcon />
+      </ListItemIcon>
+      <ListItemText primary="صفحه اصلی" />
+    </ListItem>
+        <ListItem button onClick={handleMen}>
         <ListItemIcon>
         <InsertEmoticonIcon />
       </ListItemIcon>
       <ListItemText primary="مردانه" />
     </ListItem>
-    <ListItem button>
+    <ListItem button onClick={handleWomen}>
       <ListItemIcon>
       <FaceIcon />
       </ListItemIcon>
       <ListItemText primary="زنانه" />
     </ListItem>
-    <ListItem button>
+    <ListItem button onClick={handleAccesory}>
       <ListItemIcon>
         <FilterVintageIcon />
       </ListItemIcon>
