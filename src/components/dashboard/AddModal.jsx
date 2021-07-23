@@ -1,5 +1,5 @@
 import React from 'react';
-import MyModal from '../Modal'
+import MyModal from '../../modals/Modal'
 
 const AddModal = (open,setOpen) => {
     return (

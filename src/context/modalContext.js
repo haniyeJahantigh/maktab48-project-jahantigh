@@ -1,6 +1,6 @@
 import React, { createContext } from "react";
 import { useModalHook } from "../HOoks/modalHook";
-import Modal from "../components/Modal";
+import Modal from "../modals/Modal";
 
 let ModalContext;
 let { Provider } = (ModalContext = createContext());

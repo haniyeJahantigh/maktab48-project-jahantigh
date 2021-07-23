@@ -1,5 +1,5 @@
 import withLoading from "../../HOC/withLoading";
-import React, { useState, useContext } from "react";
+import React, { useState, useContext,useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Table from "@material-ui/core/Table";
@@ -13,12 +13,12 @@ import TableRow from "@material-ui/core/TableRow";
 import { useHistory } from "react-router-dom";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
-import Modal from "../Modal";
+import Modal from "../../modals/Modal";
 import Container from "@material-ui/core/Container";
 import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from "@material-ui/icons/Delete";
 import Avatar from "@material-ui/core/Avatar";
-import EditModal from "../EditModal";
+import EditModal from "../../modals/EditModal";
 import AddModal from "./AddModal";
 import { ArrowDropDown } from "@material-ui/icons";
 
@@ -70,36 +70,46 @@ const useStyles = makeStyles({
   },
 });
 
-function Manage({ data, ...props }) {
+function Manage({ data,setData, ...props}) {
   const classes = useStyles();
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [open, setOpen] = React.useState(false);
   const [openEdit, setOpenEdit] = React.useState(false);
   const [product, setProduct] = React.useState();
-  const [products, setProducts] = React.useState([]);
 
-  let history = useHistory();
 
+  //pagination   ***************************************************************
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
-
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
 
+  // useEffect(() => {
+  //   const getProducts= async()=>{
+  //     setData(data)
+  //   }
+  //   getProducts()
+  // }, [])
+
+  //open modal for add new product ***************************************************************
   const handleClick = () => {
     setOpen(true);
   };
-  // function handleEditModal(e) {
-  //   // setOpenEdit(true);
-  //   console.log(e);
-  //   // console.log(e.target.id);
-  //   // const id= e.target.id
-  //   // setProduct(data.find(item=>item.id === +id))
-  // }
+
+  //edit product ***************************************************************
+  function handleEditModal(e) {
+    setOpenEdit(true);
+    console.log(e);
+    // console.log(e.target.id);
+    // const id= e.target.id
+    // setData(data?.find(item=>item.id === e))
+  }
+
+  //add a new product ***************************************************************
   const addProduct = async (product) => {
     try {
       const res = await fetch("http://localhost:8000/products", {
@@ -109,23 +119,22 @@ function Manage({ data, ...props }) {
         },
         body: JSON.stringify(product),
       });
-      const data = await res.json();
-      console.log("data=",data);
-      console.log("res=",res);
-      setProducts([...products, data]);
-      // return res;
+      const newData = await res.json();
+      setData([...data, newData]);
     } catch (err) {
       console.log(err);
     }
   };
 
+    //delete a product ***************************************************************
   const handleDelet =async (proId) => {
-    await fetch(`http://localhost:5000/tasks/${proId}` ,{
+   const res= await fetch(`http://localhost:8000/products/${proId}` ,{
       method: "DELETE"
     })
+    .then((res)=> setData(data.filter((product) => product.id !== proId)))
    console.log(proId);
-   setProducts(products.filter((product) => product.id !== proId));
-   // or .then((res)=> setTasks(tasks.filter((task) => task.id !== taskId)))
+  //  const filterData=await data.filter((product) => product.id !== proId)
+  //  setData(filterData);
  };
 
   return (
@@ -152,7 +161,7 @@ function Manage({ data, ...props }) {
               افزودن کالا
             </Button>
           </Grid>
-          {/* <AddModal open={open} setOpen={setOpen}/> */}
+
           <Modal open={open} setOpen={setOpen} add={addProduct} />
 
           <Grid item xs={12} className={classes.root}>
@@ -174,18 +183,18 @@ function Manage({ data, ...props }) {
                   </TableHead>
                   <TableBody>
                     {data
-                      .slice(
+                      ?.slice(
                         page * rowsPerPage,
                         page * rowsPerPage + rowsPerPage
                       )
-                      .map((datas) => {
+                      ?.map((datas) => {
                         return (
                           <TableRow
                             hover
                             role="checkbox"
                             tabIndex={-1}
                             key={datas.code}
-                            
+                            id={datas.id}
                           >
                             <TableCell
                               id={datas.id}
@@ -218,11 +227,13 @@ function Manage({ data, ...props }) {
                               key={datas.id}
                               align="right"
                             >
-                              {/* <div onClick={(e) => handleEditModal(e)}> */}
-                                <EditIcon id={datas.id} />
-                              {/* </div> */}
+                              <div onClick={(e) => handleEditModal(datas.id)} id={datas.id}>
+                                <EditIcon  />
+                              </div>
 
-                              <DeleteIcon onClick={handleDelet} id={datas.id}/>
+                              <div onClick={(e) => handleDelet(datas.id)} id={datas.id}>
+                              <DeleteIcon />
+                              </div>
                             </TableCell>
                           </TableRow>
                         );
@@ -243,8 +254,8 @@ function Manage({ data, ...props }) {
               <EditModal
                 openEdit={openEdit}
                 setOpenEdit={setOpenEdit}
-                setProduct={setProduct}
-                product={product}
+                setData={setData}
+                data={data}
               />
             </Paper>
           </Grid>

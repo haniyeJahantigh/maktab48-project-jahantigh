@@ -1,20 +1,9 @@
-import React,{useEffect} from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import Modal from "@material-ui/core/Modal";
-import Backdrop from "@material-ui/core/Backdrop";
-import Fade from "@material-ui/core/Fade";
+import React,{useState} from "react";
 import CancelIcon from "@material-ui/icons/Cancel";
-import {
-  Typography,
-  Grid,
-  Button,
-  TextField,
-  MenuItem,
-  Input,
-} from "@material-ui/core";
-import Container from "@material-ui/core/Container";
-import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
-import {addDatafetch} from '../api/addDatafetch'
+import { Typography, Grid,Button,TextField, MenuItem,Input,Modal,Backdrop,Fade,Container} from "@material-ui/core";
+import { createMuiTheme, ThemeProvider,makeStyles } from "@material-ui/core/styles";
+import imageToBase64 from 'image-to-base64/browser';
+// import {addDatafetch} from '../api/addDatafetch'
 
 const theme = createMuiTheme({
   direction: "rtl",
@@ -35,43 +24,58 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const category = [
+  
   {
-    value: "electronics",
-    label: "electronics",
+    value: "لباس مردانه",
+    label: "لباس مردانه",
   },
   {
-    value: "jewelery",
-    label: "jewelery",
-  },
-  {
-    value: "men clothing",
-    label: "men clothing",
-  },
-  {
-    value: "women clothing",
-    label: "women clothing",
+    value: "لباس زنانه",
+    label: "لباس زنانه",
   },
 ];
 
-export default function EditModal({ openEdit, setOpenEdit, props,setProduct,product}) {
+export default function AddModal({ open, setOpen, props,add }) {
   const classes = useStyles();
-  const [currency, setCurrency] = React.useState("EUR");
-  
-  //   const [open, setOpen] = React.useState(false);
-  //   const [close, setClose] = React.useState(false);
-  const handleChange = (event) => {
-    setCurrency(event.target.value);
-  };
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [cat, setCat] = useState("");
+  const [imagePro, setImagePro] = useState("");
+
+
+
   const handleClose = () => {
-    setOpenEdit(false);
+    setOpen(false);
   };
 
-  const handleAddProduct=()=>{
-    setOpenEdit(false);
-    // addDatafetch();
+  const handleAddProduct=(e)=>{
+    e.preventDefault();
+    setOpen(false);
+
+    add({title,description});
+
+    console.log(title);
+    console.log(description);
+
+    setTitle("");
+    setDescription("")
     console.log('add new pro');
   }
-// console.log(product);
+  const handleImage=(e)=>{
+console.log(e.target.value);
+imageToBase64("e.target.value") // Path to the image
+    .then(
+        (response) => {
+            console.log(response); 
+            setImagePro(response)
+        }
+    )
+    .catch(
+        (error) => {
+            console.log(error); // Logs an error if there was one
+        }
+    )
+  }
 
   return (
     <ThemeProvider theme={theme}>
@@ -80,7 +84,7 @@ export default function EditModal({ openEdit, setOpenEdit, props,setProduct,prod
           aria-labelledby="transition-modal-title"
           aria-describedby="transition-modal-description"
           className={classes.modal}
-          open={openEdit}
+          open={open}
           onClose={handleClose}
           closeAfterTransition
           BackdropComponent={Backdrop}
@@ -89,28 +93,30 @@ export default function EditModal({ openEdit, setOpenEdit, props,setProduct,prod
             timeout: 500,
           }}
         >
-          <Fade in={openEdit} dir="rtl">
+          <Fade in={open} dir="rtl">
             <Container maxWidth="sm" dir="rtl">
               <div className={classes.paper}>
                 <Grid container spacing={3}>
                   <Grid item xs={9}>
-                    <Typography>ادیت کالا</Typography>
+                    <Typography>افزودن کالا</Typography>
                   </Grid>
                   <Grid item xs={3}>
                     <CancelIcon onClick={handleClose} />
                   </Grid>
-                  <Grid container spacing={3}>
-                  <Grid item xs={12} sm={9} maxWidth="lg">
+                  
+                  <Grid item xs={12}  maxWidth="lg">
                     <Input
                       label="تصویر کالا"
                       type="file"
-                      accessKey="image"
+                      accept="image/*"
                       id="outlined-size-small"
                       variant="outlined"
                       size="small"
                       fullWidth
+                      onChange={handleImage}
+
                     />
-                  </Grid>
+                  
                   </Grid>
                   <Grid item xs={12} maxWidth="lg">
                     <TextField
@@ -119,7 +125,8 @@ export default function EditModal({ openEdit, setOpenEdit, props,setProduct,prod
                       variant="outlined"
                       size="small"
                       fullWidth
-                    //   defaultValue={product.title}
+                      value={title}
+                      onChange={(e)=> setTitle(e.target.value)}
                     />
                   </Grid>
 
@@ -129,13 +136,16 @@ export default function EditModal({ openEdit, setOpenEdit, props,setProduct,prod
                       id="sort"
                       select
                       label="دسته بندی"
-                      value={currency}
-                      onChange={handleChange}
                       helperText="Please select your category"
                       variant="outlined"
-                    //   defaultValue={product.category}
+                      // value={cat}
+                      onChange={(e)=> setCat(e.target.value)}
                     >
-                      
+                      {category.map((option) => (
+                        <MenuItem key={option.value} value={option.value} >
+                          {option.label}
+                        </MenuItem>
+                      ))}
                     </TextField>
                   </Grid>
                   <Grid item xs={12} maxWidth="lg">
@@ -146,7 +156,8 @@ export default function EditModal({ openEdit, setOpenEdit, props,setProduct,prod
                       rows={4}
                       variant="outlined"
                       fullWidth
-                    //   defaultValue={product.description}
+                      value={description}
+                      onChange={(e)=>setDescription(e.target.value)}
                     />
                   </Grid>
                   <Grid

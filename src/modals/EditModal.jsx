@@ -1,9 +1,20 @@
-import React,{useState} from "react";
+import React,{useEffect} from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import Modal from "@material-ui/core/Modal";
+import Backdrop from "@material-ui/core/Backdrop";
+import Fade from "@material-ui/core/Fade";
 import CancelIcon from "@material-ui/icons/Cancel";
-import { Typography, Grid,Button,TextField, MenuItem,Input,Modal,Backdrop,Fade,Container} from "@material-ui/core";
-import { createMuiTheme, ThemeProvider,makeStyles } from "@material-ui/core/styles";
-import imageToBase64 from 'image-to-base64/browser';
-// import {addDatafetch} from '../api/addDatafetch'
+import {
+  Typography,
+  Grid,
+  Button,
+  TextField,
+  MenuItem,
+  Input,
+} from "@material-ui/core";
+import Container from "@material-ui/core/Container";
+import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
+import {addDatafetch} from '../api/addDatafetch'
 
 const theme = createMuiTheme({
   direction: "rtl",
@@ -24,58 +35,43 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const category = [
-  
   {
-    value: "لباس مردانه",
-    label: "لباس مردانه",
+    value: "electronics",
+    label: "electronics",
   },
   {
-    value: "لباس زنانه",
-    label: "لباس زنانه",
+    value: "jewelery",
+    label: "jewelery",
+  },
+  {
+    value: "men clothing",
+    label: "men clothing",
+  },
+  {
+    value: "women clothing",
+    label: "women clothing",
   },
 ];
 
-export default function AddModal({ open, setOpen, props,add }) {
+export default function EditModal({ openEdit, setOpenEdit,data,setData, props}) {
   const classes = useStyles();
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [cat, setCat] = useState("");
-  const [imagePro, setImagePro] = useState("");
-
-
-
+  const [currency, setCurrency] = React.useState("EUR");
+  
+  //   const [open, setOpen] = React.useState(false);
+  //   const [close, setClose] = React.useState(false);
+  const handleChange = (event) => {
+    setCurrency(event.target.value);
+  };
   const handleClose = () => {
-    setOpen(false);
+    setOpenEdit(false);
   };
 
-  const handleAddProduct=(e)=>{
-    e.preventDefault();
-    setOpen(false);
-
-    add({title,description});
-
-    console.log(title);
-    console.log(description);
-
-    setTitle("");
-    setDescription("")
+  const handleAddProduct=()=>{
+    setOpenEdit(false);
+    // addDatafetch();
     console.log('add new pro');
   }
-  const handleImage=(e)=>{
-console.log(e.target.value);
-imageToBase64("e.target.value") // Path to the image
-    .then(
-        (response) => {
-            console.log(response); 
-            setImagePro(response)
-        }
-    )
-    .catch(
-        (error) => {
-            console.log(error); // Logs an error if there was one
-        }
-    )
-  }
+// console.log(product);
 
   return (
     <ThemeProvider theme={theme}>
@@ -84,7 +80,7 @@ imageToBase64("e.target.value") // Path to the image
           aria-labelledby="transition-modal-title"
           aria-describedby="transition-modal-description"
           className={classes.modal}
-          open={open}
+          open={openEdit}
           onClose={handleClose}
           closeAfterTransition
           BackdropComponent={Backdrop}
@@ -93,30 +89,28 @@ imageToBase64("e.target.value") // Path to the image
             timeout: 500,
           }}
         >
-          <Fade in={open} dir="rtl">
+          <Fade in={openEdit} dir="rtl">
             <Container maxWidth="sm" dir="rtl">
               <div className={classes.paper}>
                 <Grid container spacing={3}>
                   <Grid item xs={9}>
-                    <Typography>افزودن کالا</Typography>
+                    <Typography>ادیت کالا</Typography>
                   </Grid>
                   <Grid item xs={3}>
                     <CancelIcon onClick={handleClose} />
                   </Grid>
-                  
-                  <Grid item xs={12}  maxWidth="lg">
+                  <Grid container spacing={3}>
+                  <Grid item xs={12} sm={9} maxWidth="lg">
                     <Input
                       label="تصویر کالا"
                       type="file"
-                      accept="image/*"
+                      accessKey="image"
                       id="outlined-size-small"
                       variant="outlined"
                       size="small"
                       fullWidth
-                      onChange={handleImage}
-
                     />
-                  
+                  </Grid>
                   </Grid>
                   <Grid item xs={12} maxWidth="lg">
                     <TextField
@@ -125,8 +119,7 @@ imageToBase64("e.target.value") // Path to the image
                       variant="outlined"
                       size="small"
                       fullWidth
-                      value={title}
-                      onChange={(e)=> setTitle(e.target.value)}
+                      defaultValue={data.title}
                     />
                   </Grid>
 
@@ -136,15 +129,13 @@ imageToBase64("e.target.value") // Path to the image
                       id="sort"
                       select
                       label="دسته بندی"
+                      value={currency}
+                      onChange={handleChange}
                       helperText="Please select your category"
                       variant="outlined"
-                      onChange={(e)=> setCat(e.target.value)}
+                      defaultValue={data.category}
                     >
-                      {category.map((option) => (
-                        <MenuItem key={option.value} value={option.value} >
-                          {option.label}
-                        </MenuItem>
-                      ))}
+                      
                     </TextField>
                   </Grid>
                   <Grid item xs={12} maxWidth="lg">
@@ -155,8 +146,7 @@ imageToBase64("e.target.value") // Path to the image
                       rows={4}
                       variant="outlined"
                       fullWidth
-                      value={description}
-                      onChange={(e)=>setDescription(e.target.value)}
+                      defaultValue={data.description}
                     />
                   </Grid>
                   <Grid

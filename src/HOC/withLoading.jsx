@@ -36,7 +36,7 @@ function withLoading(WrappedComponent, api) {
       </Backdrop>
       );
     } else {
-      return <WrappedComponent data={data} {...props} />;
+      return <WrappedComponent data={data} {...props} setData={setData}/>;
     }
   };
 

@@ -1,13 +1,13 @@
 import { Router, Switch, Route } from "react-router-dom";
 import React from "react";
-import Manage from './Manage';
-import Orders from './Orders';
-import StockPrice from './StockPrice';
-import AdminHeader from "./AdminHeader";
+import Manage from '../components/dashboard/Manage';
+import Orders from '../components/dashboard/Orders';
+import StockPrice from '../components/dashboard/StockPrice';
+import AdminHeader from "../components/dashboard/AdminHeader";
 import { makeStyles } from "@material-ui/core/styles";
 
 
-function Layout(props) {
+function AdminLayout(props) {
     
   return (
     <div >
@@ -24,4 +24,4 @@ function Layout(props) {
 }
 
 
-export default Layout;
+export default AdminLayout;
