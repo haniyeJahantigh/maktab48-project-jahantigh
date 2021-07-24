@@ -6,7 +6,8 @@ import { useHistory } from "react-router-dom";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import LimitProduct from "./LimitProduct";
-;
+import { ToastContainer, toast } from 'react-toastify';
+
 
 const theme = createMuiTheme({
   direction: "rtl",
@@ -34,8 +35,10 @@ function Main({ data,setData, ...props}) {
   
   return (
     <ThemeProvider theme={theme}>
+        <ToastContainer />
       <Container maxWidth="md">
-      <Typography variant="h6">{data.category}</Typography>
+
+        <Typography variant="h6">{data.category}</Typography>
         <LimitProduct data={data} setData={setData} categoryLimit="لباس مردانه" classes={classes.container}/>
         <LimitProduct data={data} setData={setData} categoryLimit="لباس زنانه" classes={classes.container}/>
         <LimitProduct data={data} setData={setData} categoryLimit="کیف و کوله پشتی" classes={classes.container}/>

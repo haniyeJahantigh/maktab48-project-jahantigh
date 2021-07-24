@@ -7,11 +7,13 @@ import {
   CardActionArea,
   CardMedia,
   CardContent,
+  Button
 } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import ArrowLeftIcon from "@material-ui/icons/ArrowLeft";
+import CardProduct from "./CardProduct";
 
 const theme = createMuiTheme({
   direction: "rtl",
@@ -35,9 +37,19 @@ const useStyles = makeStyles({
 
 const LimitProduct = ({ data, setData, categoryLimit }) => {
   const classes = useStyles();
+  const history = useHistory();
+
   const LimitData = data?.filter(
     (product) => product.category === categoryLimit
   );
+
+  const handleGoToProductPage = (e) => {
+    history.push(`/product/${data.id}`);
+    console.log(data.id);
+    console.log(e);
+    console.log("product clicked");
+  };
+
   const SliceData = LimitData.slice(0, 6);
   return (
     <ThemeProvider theme={theme}>
@@ -79,6 +91,16 @@ const LimitProduct = ({ data, setData, categoryLimit }) => {
                       >
                         قیمت: {pro.price}
                       </Typography>
+
+                      <Button
+                          variant="contained"
+                          color="primary"
+                          onCLick={handleGoToProductPage}
+                          fullWidth
+                          size='small'
+                        >
+                          بیشتر
+                        </Button>
                     </CardContent>
                 </CardActionArea>
               </Card>

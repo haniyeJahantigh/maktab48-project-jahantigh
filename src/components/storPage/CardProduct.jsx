@@ -9,6 +9,7 @@ import {
   CardActionArea,
   CardMedia,
   CardContent,
+  Button,
 } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
@@ -35,12 +36,20 @@ const useStyles = makeStyles({
   },
 });
 
-function CardProduct ({ data,categoryLimit}) {
+function CardProduct({ data, categoryLimit }) {
   const classes = useStyles();
+  const history = useHistory();
+
+  function handleGoToProductPage (e) {
+    history.push(`/product/${data.id}`);
+    console.log(data.id);
+    console.log(e);
+    console.log("product clicked");
+  };
+
   const LimitData = data?.filter(
     (product) => product.category === categoryLimit
   );
-  
   return (
     <ThemeProvider theme={theme}>
       <Container maxWidth="md" className={classes.root}>
@@ -51,47 +60,55 @@ function CardProduct ({ data,categoryLimit}) {
           </Typography>
         </Grid>
         <Grid container dir="rtl" spacing={4}>
-        {LimitData?.map((pro) => {
-          return (
-            <Grid
-              item
-            //   direction="row"
-              justifyContent="space-between"
-              alignItems="center"
-              
-              xs={12}
-              sm={6}
-              md={4}
-            >
-              <Card >
-                <CardActionArea>
-                    <CardMedia
-                      className={classes.media}
-                      image={pro.image}
-                      title="products"
-                    />
-                    <CardContent >
+          {LimitData?.map((pro) => {
+            return (
+              <Grid
+                item
+                justifyContent="space-between"
+                alignItems="center"
+                xs={12}
+                sm={6}
+                md={4}
+              >
+                <div>
+                  <Card>
+                    <CardActionArea>
+                      <CardMedia
+                        className={classes.media}
+                        image={pro.image}
+                        title="products"
+                      />
+                      <CardContent>
                         <Typography gutterBottom variant="h6" component="h6">
                           {pro.title}
                         </Typography>
-                      <Typography
-                        variant="body2"
-                        color="textSecondary"
-                        component="p"
-                      >
-                        قیمت: {pro.price}
-                      </Typography>
-                    </CardContent>
-                </CardActionArea>
-              </Card>
-             </Grid>
-          );
-        })}
+                        <Typography
+                          variant="body2"
+                          color="textSecondary"
+                          component="p"
+                        >
+                          قیمت: {pro.price}
+                        </Typography>
+
+                        <Button
+                          variant="contained"
+                          color="primary"
+                          onCLick={()=>handleGoToProductPage(pro.id)}
+                          fullWidth
+                        >
+                          بیشتر
+                        </Button>
+                      </CardContent>
+                    </CardActionArea>
+                  </Card>
+                </div>
+              </Grid>
+            );
+          })}
         </Grid>
       </Container>
     </ThemeProvider>
   );
-};
+}
 
 export default withLoading(CardProduct, "http://localhost:8000/products");
-

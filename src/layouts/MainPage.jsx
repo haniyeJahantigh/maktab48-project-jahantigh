@@ -6,6 +6,7 @@ import Main from '../components/storPage/Main'
 import MenPro from '../components/storPage/MenPro'
 import WomenPro from '../components/storPage/WomenPro'
 import Accesory from '../components/storPage/Accesory'
+import Product from '../components/storPage/Product'
 
 
 function MainPage(props) {
@@ -20,6 +21,7 @@ function MainPage(props) {
           <Route path="/MensProduct" exact component={MenPro} />
           <Route path="/WomensProduct" exact component={WomenPro} />
           <Route path="/accesorys" exact component={Accesory} />
+          <Route path="/product/:id" exact component={Product} />
         </Switch>
       </React.Fragment>
     </div>
