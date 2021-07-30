@@ -63,7 +63,7 @@ const Header = ({open,setOpen}) => {
   };
   const handleShopping = (e) => {
     e.preventDefault();
-    // history.push("/login");
+    history.push("/cardSopping");
   };
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -106,7 +106,7 @@ const Header = ({open,setOpen}) => {
                   <ShoppingCartOutlinedIcon />
                   </Badge>
                 </IconButton>
-              سبد خرید
+                 سبد خرید
             </Button>
           </Toolbar>
         </AppBar>

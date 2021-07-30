@@ -7,7 +7,7 @@
       "description": "Your perfect pack for everyday use and walks in the forest. Stash your laptop (up to 15 inches) in the padded sleeve, your everyday",
       "category": "کیف و کوله پشتی",
       "image": "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg"
-      },
+    },
     {
       "id": 2,
       "title": "تی شرت مردانه اسلیم فیت ",
@@ -189,17 +189,8 @@
       "stock": 100
     },
     {
-      "id": 28,
-      "title": "کیف مسافرتی ",
-      "price": 350000,
-      "description": "Your perfect pack for everyday use and walks in the forest. Stash your laptop (up to 15 inches) in the padded sleeve, your everyday",
-      "category": "کیف و کوله پشتی",
-      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQMoOo3eNrLORKmROZ1iKizEnsVKqs0H0noWQ&usqp=CAU",
-      "stock": 100
-    },
-    {
-      "title": "مانتو حریر",
-      "description": "جنس حریر، تک رنگ، طرح دار ",
+      "title": "مانتو",
+      "description": "شسذشیس",
       "id": 29
     }
   ],

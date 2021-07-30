@@ -44,7 +44,7 @@ const LimitProduct = ({ data, setData, categoryLimit }) => {
   );
 
   const handleGoToProductPage = (e) => {
-    history.push(`/product/${data.id}`);
+    history.push(`/product/${e}`);
     console.log(data.id);
     console.log(e);
     console.log("product clicked");
@@ -95,7 +95,7 @@ const LimitProduct = ({ data, setData, categoryLimit }) => {
                       <Button
                           variant="contained"
                           color="primary"
-                          onCLick={handleGoToProductPage}
+                          onClick={()=>handleGoToProductPage(pro.id)}
                           fullWidth
                           size='small'
                         >

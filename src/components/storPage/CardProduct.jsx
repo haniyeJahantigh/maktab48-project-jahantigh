@@ -1,7 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import withLoading from "../../HOC/withLoading";
-
 import {
   Typography,
   Grid,
@@ -39,11 +38,10 @@ const useStyles = makeStyles({
 function CardProduct({ data, categoryLimit }) {
   const classes = useStyles();
   const history = useHistory();
+  
 
   function handleGoToProductPage (e) {
-    history.push(`/product/${data.id}`);
-    console.log(data.id);
-    console.log(e);
+    history.push(`/product/${e}`);
     console.log("product clicked");
   };
 
@@ -93,7 +91,7 @@ function CardProduct({ data, categoryLimit }) {
                         <Button
                           variant="contained"
                           color="primary"
-                          onCLick={()=>handleGoToProductPage(pro.id)}
+                          onClick={()=>handleGoToProductPage(pro.id)}
                           fullWidth
                         >
                           بیشتر

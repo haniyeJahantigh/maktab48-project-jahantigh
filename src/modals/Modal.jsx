@@ -61,6 +61,7 @@ export default function AddModal({ open, setOpen, props,add }) {
     setDescription("")
     console.log('add new pro');
   }
+  
   const handleImage=(e)=>{
 console.log(e.target.value);
 imageToBase64("e.target.value") // Path to the image
