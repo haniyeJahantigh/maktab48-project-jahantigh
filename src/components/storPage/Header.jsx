@@ -61,7 +61,7 @@ const useStyles = makeStyles((theme) => ({
 const Header = ({open,setOpen}) => {
   const classes = useStyles();
   let history = useHistory();
-  const cartItems = useSelector((state) => state.cartItems)
+  const cartItems = useSelector((state) => state.cartItem)
 
   
   const handleUser = (e) => {
@@ -109,7 +109,7 @@ const Header = ({open,setOpen}) => {
                   aria-haspopup="false"
                   color="inherit"
                 >
-                  <Badge badgeContent={4}  color="error">
+                  <Badge badgeContent={cartItems.length}  color="error">
                   <ShoppingCartOutlinedIcon />
                   </Badge>
                 </IconButton>

@@ -60,7 +60,7 @@ const Payment = () => {
                 </Grid>
                 <Grid container xs={12} className={classes.btnGrup} direction="row" justifyContent="center"  alignItems="center" >
                       <Grid item xs={6}>
-                        <Button onClick={handleSuccess} color='primary' variant="contained"className={classes.btn} >پرداخت </Button>
+                        <Button onClick={handleSuccess} color='primary' variant="contained" className={classes.btn} >پرداخت </Button>
                        </Grid>
                        <Grid item xs={6}>
                         <Button onClick={handleFailed} color='warning' variant="contained" className={classes.btn}>انصراف </Button>

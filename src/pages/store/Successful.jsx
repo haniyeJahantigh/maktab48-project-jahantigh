@@ -8,19 +8,25 @@ import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles({
     container:{
-        margin:"30px auto"
+        marginTop:"100px"
     },
     img: {
         objectFit: "contain",
-        objectPosition: "center",
-        height: "100%",
-        width: "100%",
+        objectPosition:"right",
+        height: "60%",
+        width: "60%",
+        margin:"auto",
+        alignItems:"center"
     },
     box: {
-        height: "100%",
-        width: "100%",
-        margin: "auto"
+        height: "60%",
+        width: "60%",
+        alignItems:"center",
+        margin:"auto"
     },
+    title:{
+        textAlign:"right"
+    }
   });
 const Successful = () => {
     const classes = useStyles();
@@ -33,16 +39,16 @@ const Successful = () => {
     return (
         <>
             <Container maxWidth="lg" className={classes.container}>
-                <Grid container spacing={8} alignItems="center">
-                    <Grid xs={12} md={6}>
-                        <Box className={classes.box}><img className={classes.img} src={successful} alt="پرداخت موفق" /></Box>
+                <Grid container spacing={0} alignItems="center" direction="row-reverse" justifyContent="center" >
+                    <Grid item xs={12} sm={6}>
+                         <img className={classes.img} src={successful} alt="پرداخت موفق"  />
                     </Grid>
-                    <Grid  xs={12} md={6}>
-                    <Typography variant="h6">
+                    <Grid item xs={12} sm={6} className={classes.title}>
+                    <Typography variant="h6"  >
                         با تشکر از خرید شما،
                         پرداخت با موفقیت انجام شد
                      </Typography>
-                        <Button onClick={handleGoToHome} color='primary'>بازگشت به سایت </Button>
+                        <Button onClick={handleGoToHome} color="primary"  variant="contained" > بازگشت به سایت </Button>
                     </Grid>
                 </Grid>
                 

@@ -53,7 +53,7 @@ export default function SignIn({}) {
         .then((res) => {
           console.log(res);
           localStorage.setItem("token", res.data.token);
-          history.push("/dashboard");
+          history.push("/dashboard/manage");
           console.log("token");
         })
         .catch((err) => console.error(err));

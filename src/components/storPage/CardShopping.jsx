@@ -1,4 +1,3 @@
-import withLoading from "../../HOC/withLoading";
 import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Paper,TableContainer,Typography,Table, Grid ,TableBody,TableCell,TableHead,TablePagination, TableRow, Button,Container} from "@material-ui/core";
@@ -44,16 +43,14 @@ const useStyles = makeStyles({
   footer:{
     paddingTop:"30px",
     direction:"row"
-  }
+  },
+  
 });
 
-export default function CardShopping({ data, ...props }) {
+export default function CardShopping({ data }) {
   const classes = useStyles();
-
   const cartItems = useSelector((state) => state.cartItem);
-
   const productSum = cartItems?.map((item) => item.price * item.number);
-  // console.log(productSum);
   const total = productSum.length > 0 ? productSum.reduce((sum, item) => (sum += item)) : 0;
   const dispatch = useDispatch();
 
