@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useDispatch ,useSelector} from "react-redux";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
@@ -10,6 +11,8 @@ import { toast } from "react-toastify";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
+import { addToCart } from '../../redux/actions/cardAction';
+import { getAProduct } from "../../redux/actions/productAction";
 
 
 const theme = createMuiTheme({
@@ -51,31 +54,23 @@ const useStyles = makeStyles((theme) => ({
 const Product = () => {
   const classes = useStyles();
   const { id } = useParams();
-  const [productData, setProductData] = useState(null);
   let history = useHistory();
+ const dispatch = useDispatch()
+ const productData = useSelector((state) => state.allProduct.selectedProduct);
+ const [num, setNum] = useState(1)
 
   useEffect(() => {
-    fetchProduct(id);
+    dispatch(getAProduct(id));
   }, []);
 
   const handleAddProductForBuy = () => {
     console.log("added to card shopping");
+    let cartItem = { title: productData.title, price: Number(productData.price), number: Number(num) }
+    console.log(cartItem);
+     dispatch(addToCart(cartItem))
   };
 
-  const fetchProduct = async (id) => {
-    try {
-      const response = await fetch(`http://localhost:8000/products/${id}`);
-      const data = await response.json();
-      setProductData(data);
-      console.log(productData);
-      if (response.status === 404) {
-        toast.error("not found");
-        history.push("/");
-      }
-    } catch (err) {
-      toast.error("request failed!");
-    }
-  };
+
   return (
     <ThemeProvider theme={theme}>
       <div>
@@ -96,7 +91,6 @@ const Product = () => {
                   component="h2"
                   variant="h4"
                   color="inherit"
-                  gutterBottom
                 >
                   {productData?.title}
                 </Typography>
@@ -117,18 +111,28 @@ const Product = () => {
                 variant="contained"
                 color="primary"
                 onClick={handleAddProductForBuy}
+                disabled={productData?.stock === "0"}
               >
                 افزودن به سبد خرید
               </Button>
               <TextField
                 id="outlined-basic"
                 label="تعداد"
+                onChange={e => setNum(e.target.value)}
+                value={num}
                 variant="outlined"
                 type="number"
                 defaultValue="1"
                 className={classes.number}
+                // onkeydown={(e) => {
+                //   e.preventDefault();
+                // }}
+                // onKeyPress={(e) => {
+                //   e.preventDefault();
+                // }}
                 size="small"
               />
+              {productData?.stock === "0" ? <Typography style={{ color: "red" }}>اتمام موجودی</Typography> : null}
              
             </div>
           

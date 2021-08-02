@@ -1,5 +1,5 @@
-import {getAllOrders,putStatus,addedOrder} from "../../api/orders/orders"
-import { ActionTypes } from "../constants/action-type.js";
+import {getAllOrders,putStatus,addedOrder} from "../../api/ordersApi"
+import { ActionTypes } from "../constats/action-type";
 /*
 * declare sync actions
 */
@@ -9,7 +9,8 @@ export const setOrders = (orders) => {
       payload: orders,
     };
   };
-  export function setLoading(){
+
+export function setLoading(){
     return{
         type:ActionTypes.SET_LOADING,
         // payload:

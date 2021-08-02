@@ -33,7 +33,7 @@
       "description": "The color could be slightly different between on the screen and in practice. / Please note that body builds vary by person, therefore, detailed size information should be reviewed below on the product description.",
       "category": "لباس مردانه",
       "image": "https://fakestoreapi.com/img/71YXzeOuslL._AC_UY879_.jpg",
-      "stock": 100
+      "stock": 0
     },
     {
       "id": 5,
@@ -220,6 +220,7 @@
           "number": 1
         }
       ],
+      "total": 750000,
       "location": "تهران میدان انقلاب",
       "phone": "09152223344",
       "recived": true
@@ -249,6 +250,7 @@
           "number": 1
         }
       ],
+      "total": 750000,
       "location": "تهران میدان انقلاب",
       "recived": true,
       "phone": "09152223344"
@@ -278,9 +280,100 @@
           "number": 1
         }
       ],
+      "total": 750000,
       "location": "تهران میدان انقلاب",
       "recived": false,
       "phone": "09152223344"
+    },
+    {
+      "userName": "مهسا  غفاری",
+      "location": "مشهد",
+      "phone": "09335554433",
+      "orderDate": "۱۴۰۰/۵/۱۱",
+      "recDate": "jYYYY/jMM/jDD",
+      "products": [
+        {
+          "title": "اسلیم فیت مردانه",
+          "price": 240000,
+          "number": 1
+        }
+      ],
+      "total": 240000,
+      "recived": false,
+      "id": 4
+    },
+    {
+      "userName": "مهسا  غفاری",
+      "location": "مشهد",
+      "phone": "09335554433",
+      "orderDate": "۱۴۰۰/۵/۱۱",
+      "recDate": "jYYYY/jMM/jDD",
+      "products": [
+        {
+          "title": "اسلیم فیت مردانه",
+          "price": 240000,
+          "number": 1
+        }
+      ],
+      "total": 240000,
+      "recived": false,
+      "id": 5
+    },
+    {
+      "userName": "مهسا  غفاری",
+      "location": "مشهد",
+      "phone": "09335554433",
+      "orderDate": "۱۴۰۰/۵/۱۱",
+      "recDate": "jYYYY/jMM/jDD",
+      "products": [
+        {
+          "title": "اسلیم فیت مردانه",
+          "price": 240000,
+          "number": 1
+        }
+      ],
+      "total": 240000,
+      "recived": false,
+      "id": 6
+    },
+    {
+      "userName": "مهسا  غفاری",
+      "location": "مشهد",
+      "phone": "09335554433",
+      "orderDate": "۱۴۰۰/۵/۱۱",
+      "recDate": "jYYYY/jMM/jDD",
+      "products": [
+        {
+          "title": "اسلیم فیت مردانه",
+          "price": 240000,
+          "number": 1
+        }
+      ],
+      "total": 240000,
+      "recived": false,
+      "id": 7
+    },
+    {
+      "userName": "هانیه   جهان تیغ",
+      "location": "نیشابور",
+      "phone": "09153334433",
+      "orderDate": "۱۴۰۰/۵/۱۲",
+      "recDate": "jYYYY/jMM/jDD",
+      "products": [
+        {
+          "title": "کت مردانه کتان",
+          "price": 560000,
+          "number": 2
+        },
+        {
+          "title": "هودی دولایه زنانه",
+          "price": 56.99,
+          "number": 1
+        }
+      ],
+      "total": 1120056.99,
+      "recived": false,
+      "id": 8
     }
   ]
 }

@@ -14,6 +14,7 @@ import { useHistory } from "react-router-dom";
 import ShoppingCartOutlinedIcon from "@material-ui/icons/ShoppingCartOutlined";
 import MenuIcon from '@material-ui/icons/Menu';
 import clsx from 'clsx';
+import { useSelector } from 'react-redux';
 
 
 const theme = createMuiTheme({
@@ -51,11 +52,17 @@ const useStyles = makeStyles((theme) => ({
   toolbar: {
     paddingRight: 24, // keep right padding when drawer closed
   },
+  badge:{
+    background:"#ffea00",
+    color:"black"
+  }
 }));
 
 const Header = ({open,setOpen}) => {
   const classes = useStyles();
   let history = useHistory();
+  const cartItems = useSelector((state) => state.cartItems)
+
   
   const handleUser = (e) => {
     e.preventDefault();
@@ -102,7 +109,7 @@ const Header = ({open,setOpen}) => {
                   aria-haspopup="false"
                   color="inherit"
                 >
-                  <Badge badgeContent={4} color="secondary">
+                  <Badge badgeContent={4}  color="error">
                   <ShoppingCartOutlinedIcon />
                   </Badge>
                 </IconButton>

@@ -8,6 +8,7 @@ import WomenPro from '../components/storPage/WomenPro'
 import Accesory from '../components/storPage/Accesory'
 import Product from '../components/storPage/Product'
 import CardShopping from "../components/storPage/CardShopping";
+import FinalCard from "../components/storPage/FinalCard";
 
 
 function MainPage(props) {
@@ -25,6 +26,7 @@ function MainPage(props) {
           <Route path="/accesorys" exact component={Accesory} />
           <Route path="/product/:id" exact component={Product} />
           <Route path="/cardSopping" exact component={CardShopping} />
+          <Route path="/finalCard" exact component={FinalCard} />
         </Switch>
       </React.Fragment>
     </div>

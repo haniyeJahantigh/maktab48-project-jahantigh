@@ -9,12 +9,10 @@ import {
   Grid,
   Button,
   TextField,
-  MenuItem,
   Input,
 } from "@material-ui/core";
 import Container from "@material-ui/core/Container";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
-import {addDatafetch} from '../api/addDatafetch'
 
 const theme = createMuiTheme({
   direction: "rtl",
@@ -68,7 +66,6 @@ export default function EditModal({ openEdit, setOpenEdit,data,setData, props}) 
 
   const handleAddProduct=()=>{
     setOpenEdit(false);
-    // addDatafetch();
     console.log('add new pro');
   }
 // console.log(product);

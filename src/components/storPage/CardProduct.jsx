@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles ,createTheme} from "@material-ui/core/styles";
 import withLoading from "../../HOC/withLoading";
 import {
   Typography,
@@ -17,6 +17,10 @@ import ArrowLeftIcon from "@material-ui/icons/ArrowLeft";
 
 const theme = createMuiTheme({
   direction: "rtl",
+  // palette: {
+  //     secondary: "#ffeb3b",
+  //   },
+  
 });
 
 const useStyles = makeStyles({
@@ -33,6 +37,10 @@ const useStyles = makeStyles({
     width: theme.spacing(15),
     height: theme.spacing(20),
   },
+  button:{
+    background:"#ffea00",
+    color:"black"
+  }
 });
 
 function CardProduct({ data, categoryLimit }) {
@@ -89,8 +97,8 @@ function CardProduct({ data, categoryLimit }) {
                         </Typography>
 
                         <Button
+                        className={classes.button}
                           variant="contained"
-                          color="primary"
                           onClick={()=>handleGoToProductPage(pro.id)}
                           fullWidth
                         >

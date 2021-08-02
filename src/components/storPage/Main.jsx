@@ -7,6 +7,8 @@ import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import LimitProduct from "./LimitProduct";
 import { ToastContainer, toast } from 'react-toastify';
+import Slideshow from "./SlideShow";
+import slide2 from '../../accets/imgs/slide2.jpeg'
 
 
 const theme = createMuiTheme({
@@ -24,9 +26,16 @@ const useStyles = makeStyles({
     width: theme.spacing(15),
     height: theme.spacing(20),
   },
-//   container: {
-//     maxHeight: 440,
-//   },
+  slide:{
+    width: "100%",
+    alignItems:"center",
+    justifyContent:"flex-start",
+    padding:"0",
+    height:"440px"
+  },
+  container: {
+    maxHeight: 440,
+  },
 });
 
 function Main({ data,setData, ...props}) {
@@ -36,8 +45,9 @@ function Main({ data,setData, ...props}) {
   return (
     <ThemeProvider theme={theme}>
         <ToastContainer />
+        {/* <Slideshow/>    */}
+        <div ><img src={slide2} className={classes.slide}/></div>
       <Container maxWidth="md">
-
         <Typography variant="h6">{data.category}</Typography>
         <LimitProduct data={data} setData={setData} categoryLimit="لباس مردانه" classes={classes.container}/>
         <LimitProduct data={data} setData={setData} categoryLimit="لباس زنانه" classes={classes.container}/>
