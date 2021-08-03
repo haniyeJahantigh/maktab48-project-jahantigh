@@ -54,6 +54,7 @@ export const getOrders = () => async(dispatch, getState) => {
     console.log("res from put api",res);
     dispatch(changeStatus(updateOrder));
   };
+  
   /*
  * async action for add new Order
  */

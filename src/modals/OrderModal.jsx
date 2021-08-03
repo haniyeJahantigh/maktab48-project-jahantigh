@@ -2,8 +2,8 @@ import React,{useState,useEffect} from "react";
 import CancelIcon from "@material-ui/icons/Cancel";
 import { Typography,Divider, Grid,Button,Modal,Backdrop,Fade,Container,Paper,TableContainer,Table,TableHead,TableRow,TableCell,TableBody,} from "@material-ui/core";
 import { createMuiTheme, ThemeProvider,makeStyles } from "@material-ui/core/styles";
-import {useParams } from 'react-router-dom'
-import { useDispatch } from "react-redux"
+import {useParams } from 'react-router-dom';
+import { useDispatch } from "react-redux";
 import updateOrderById from '../redux/actions/orderAction'
 // import {addDatafetch} from '../api/addDatafetch'
 
@@ -47,7 +47,7 @@ const columns = [
   ];
 
 
-export default function OrderModal({ open, setOpen, props,product,setProduct }) {
+export default function OrderModal({ open, setOpen, props,product,setProduct ,delivered}) {
   const classes = useStyles();
   const dispatch = useDispatch()
   const {id}=useParams()
@@ -56,11 +56,11 @@ export default function OrderModal({ open, setOpen, props,product,setProduct }) 
   /*
   *use put api & dispatch for change order status
   */
-  const handleEdit = () => {
-    let statusObj = { ...product, recived: true }
-    dispatch(updateOrderById(product.id, statusObj))
-    window.location.reload()
-  }
+  // const handleEdit = () => {
+  //   let statusObj = { ...product, recived: true }
+  //   dispatch(updateOrderById(product.id, statusObj))
+  //   window.location.reload()
+  // }
 
   useEffect(() => {
     fetchOrder(id);
@@ -195,7 +195,7 @@ export default function OrderModal({ open, setOpen, props,product,setProduct }) 
                     justify="center"
                     alignItems="center"
                   >
-                    <Typography> زمان تحویل سغارش</Typography>
+                    <Typography> زمان تحویل سفارش</Typography>
                     <Button
               variant="contained"
               color="primary"

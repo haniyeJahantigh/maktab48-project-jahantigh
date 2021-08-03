@@ -16,6 +16,8 @@ import OrderModal from "../../modals/OrderModal";
 import Container from "@material-ui/core/Container";
 import { useSelector, useDispatch } from "react-redux";
 import { setProducts } from "../../redux/actions/productAction";
+import getOrders from '../../redux/actions/orderAction'
+
 
 const theme = createMuiTheme({
   direction: "rtl",
@@ -85,7 +87,13 @@ function Orders({ data }) {
     setValue(event.target.value);
   };
   let datas = value === "recived" ? recivedOrders : waitingOrders;
+//********************************************* */
+// const dispatch = useDispatch();
+// useEffect(() => {
+//   dispatch(getOrders());
+// }, []);
 
+  //****************************************** */
   const handleChangePage = ( newPage) => {
     setPage(newPage);
   };
@@ -104,13 +112,16 @@ function Orders({ data }) {
   //     console.error("request failed!");
   //   }
   // };
-  const handleClick = (obj) => {
-    setOpen(true);
-    setProduct(obj)
+  const handleClick = (id) => {
+    
+    console.log(id);
+    // setProduct(obj)
     // fetchOrder(e);
     // console.log(e);
     // const id = e.target.id;
-    // setProduct(data.find((item) => item.id === +id));
+    setProduct(data?.find((item) => item.id === +id));
+    console.log(product);
+    setOpen(true);
   };
 
   return (
@@ -192,7 +203,7 @@ function Orders({ data }) {
                                 key={row?.id}
                                 color="primary"
                                 href="#contained-buttons"
-                                onClick={()=>handleClick(row)}
+                                onClick={()=>handleClick(row.id)}
                               >
                                 بررسی سفارش
                               </Button>

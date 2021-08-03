@@ -166,14 +166,14 @@ export default function FinalCard() {
                 </Grid>
 
                 <Grid item xs={12} md={6}>
-                  {/* <TextField
+                  <TextField
                     style={{ width: "100%" }}
                     label="تاریخ تحویل"
                     id="outlined-basic"
                     variant="outlined"
                     dir="rtl"
-                  /> */}
-                  <DatePicker
+                  />
+                  {/* <DatePicker
                     clearable
                     inputVariant="outlined"
                     okLabel="تأیید"
@@ -182,7 +182,7 @@ export default function FinalCard() {
                     labelFunc={date => (date ? date.format("jYYYY/jMM/jDD") : " ")}
                     value={selectedDate}
                     onChange={handleDateChange}
-                  />
+                  /> */}
                 </Grid>
 
                 <Grid item xs={12} md={6}>
