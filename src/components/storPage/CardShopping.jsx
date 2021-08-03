@@ -1,12 +1,25 @@
 import withLoading from "../../HOC/withLoading";
 import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Paper,TableContainer,Typography,Table, Grid ,TableBody,TableCell,TableHead,TablePagination, TableRow, Button,Container} from "@material-ui/core";
-import { useHistory } from "react-router-dom";
+import {
+  Paper,
+  TableContainer,
+  Typography,
+  Table,
+  Grid,
+  TableBody,
+  TableCell,
+  TableHead,
+  TablePagination,
+  TableRow,
+  Button,
+  Container,
+} from "@material-ui/core";
+import { Link, useHistory } from "react-router-dom";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
 import { removeCart } from "../../redux/actions/cardAction";
 import { useDispatch, useSelector } from "react-redux";
-import NotInterestedIcon from '@material-ui/icons/NotInterested';
+import NotInterestedIcon from "@material-ui/icons/NotInterested";
 
 const theme = createMuiTheme({
   direction: "rtl",
@@ -29,22 +42,32 @@ const useStyles = makeStyles({
   toppading: {
     marginTop: "20px",
   },
-  empty:{
-    height:"200px",
-    justifyContent:"center",
+  empty: {
+    display: "flex",
+    flexWrap: "wrap",
+    justifyContent: "center",
+    alignContent: "center",
     marginTop: "150px",
-    padding: "auto",
-    paddingTop:"20%",
-    borderRadius:"5px",
-    boxShadow:"2px 1px 5px gray",
-    textAlign:"center",
-    direction:"rtl",
-
+    borderRadius: "5px",
+    boxShadow: "2px 1px 5px gray",
+    direction: "rtl",
+    padding: "2rem",
+    backgroundColor: "#fff",
   },
-  footer:{
-    paddingTop:"30px",
-    direction:"row"
-  }
+  footer: {
+    paddingTop: "30px",
+    direction: "row",
+  },
+  icon: {
+    color: "red",
+    fontSize: "5rem",
+    width: "100%",
+  },
+  btn: {
+    width: "100%",
+    textAlign:"center",
+    textDecoration:"none"
+  },
 });
 
 export default function CardShopping({ data, ...props }) {
@@ -54,20 +77,28 @@ export default function CardShopping({ data, ...props }) {
 
   const productSum = cartItems?.map((item) => item.price * item.number);
   // console.log(productSum);
-  const total = productSum.length > 0 ? productSum.reduce((sum, item) => (sum += item)) : 0;
+  const total =
+    productSum.length > 0 ? productSum.reduce((sum, item) => (sum += item)) : 0;
   const dispatch = useDispatch();
 
   let history = useHistory();
-  const handleGoToFinal=()=>{
-    history.push('/finalCard')
-  }
+  const handleGoToFinal = () => {
+    history.push("/finalCard");
+  };
 
   return (
     <ThemeProvider theme={theme}>
       <Container maxWidth="md">
         {cartItems.length > 0 ? (
           <>
-            <Grid container direction="row" justifyContent="space-between" alignItems="center" dir="rtl" className={classes.root}>
+            <Grid
+              container
+              direction="row"
+              justifyContent="space-between"
+              alignItems="center"
+              dir="rtl"
+              className={classes.root}
+            >
               <Grid item xs={12}>
                 <Typography variant="h6">سبد خرید</Typography>
               </Grid>
@@ -77,93 +108,91 @@ export default function CardShopping({ data, ...props }) {
                     <Table stickyHeader aria-label="sticky table">
                       <TableHead>
                         <TableRow>
-                        <TableCell align="right">کالا</TableCell>
-                        <TableCell align="right">قیمت</TableCell>
-                        <TableCell align="right">تعداد</TableCell>
-                        <TableCell align="right"></TableCell>
+                          <TableCell align="right">کالا</TableCell>
+                          <TableCell align="right">قیمت</TableCell>
+                          <TableCell align="right">تعداد</TableCell>
+                          <TableCell align="right"></TableCell>
                         </TableRow>
                       </TableHead>
                       <TableBody>
-                        {cartItems.map((row,index) => {
-                            return (
-                              <TableRow
-                                hover
-                                role="checkbox"
-                                tabIndex={-1}
-                                key={row.index}
-                              >
-                                <TableCell
+                        {cartItems.map((row, index) => {
+                          return (
+                            <TableRow
+                              hover
+                              role="checkbox"
+                              tabIndex={-1}
+                              key={row.index}
+                            >
+                              <TableCell id={row.id} key={row.id} align="right">
+                                {row.title}
+                              </TableCell>
+                              <TableCell id={row.id} key={row.id} align="right">
+                                {row.price}
+                              </TableCell>
+                              <TableCell id={row.id} key={row.id} align="right">
+                                {row.number}
+                              </TableCell>
+                              <TableCell id={row.id} key={row.id} align="right">
+                                <Button
+                                  variant="contained"
                                   id={row.id}
                                   key={row.id}
-                                  align="right"
+                                  color="primary"
+                                  href="#contained-buttons"
+                                  onClick={() => {
+                                    dispatch(removeCart(index));
+                                  }}
                                 >
-                                  {row.title}
-                                </TableCell>
-                                <TableCell
-                                  id={row.id}
-                                  key={row.id}
-                                  align="right"
-                                >
-                                  {row.price}
-                                </TableCell>
-                                <TableCell
-                                  id={row.id}
-                                  key={row.id}
-                                  align="right"
-                                >
-                                  {row.number}
-                                </TableCell>
-                                <TableCell
-                                  id={row.id}
-                                  key={row.id}
-                                  align="right"
-                                >
-                                  <Button
-                                    variant="contained"
-                                    id={row.id}
-                                    key={row.id}
-                                    color="primary"
-                                    href="#contained-buttons"
-                                    onClick={() => { dispatch(removeCart(index)) }}
-                                  >
-                                    حذف
-                                  </Button>
-                                </TableCell>
-                              </TableRow>
-                            );
-                          })}
+                                  حذف
+                                </Button>
+                              </TableCell>
+                            </TableRow>
+                          );
+                        })}
                       </TableBody>
                     </Table>
                   </TableContainer>
                 </Paper>
               </Grid>
               <Grid container className={classes.footer}>
-              <Grid item xs={9}>
-                <Typography variant="h6">جمع : {total.toLocaleString()} تومان</Typography>
-              </Grid>
+                <Grid item xs={9}>
+                  <Typography variant="h6">
+                    جمع : {total.toLocaleString()} تومان
+                  </Typography>
+                </Grid>
 
-              <Grid item xs={3}>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  href="#contained-buttons"
-                  onClick={handleGoToFinal}
-                >
-                  نهایی کردن سبد خرید
-                </Button>
-              </Grid>
+                <Grid item xs={3}>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    href="#contained-buttons"
+                    onClick={handleGoToFinal}
+                  >
+                    نهایی کردن سبد خرید
+                  </Button>
+                </Grid>
               </Grid>
             </Grid>
-            
           </>
         ) : (
-          
-           <Grid item xs={12}>
-            <Typography variant="h6" className={classes.empty} >
-              <NotInterestedIcon />
-              سفارشی ثبت نشده
-              </Typography>
-              </Grid>
+          <Grid item xs={12}>
+            <Typography variant="h6" className={classes.empty}>
+              <NotInterestedIcon className={classes.icon} />
+              <br />
+              سفارشی ثبت نشده است
+              <Link to="/"
+                className={classes.btn}
+              >
+                <Button
+                  variant="outlined"
+                  color="primary"
+                  className={classes.btn}
+                >
+                  بازگشت به فروشگاه
+                </Button>
+              </Link>
+            </Typography>
+          </Grid>
         )}
       </Container>
     </ThemeProvider>

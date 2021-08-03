@@ -1,0 +1,10 @@
+@font-face{
+    font-family: "yekan";
+    src: url(./accets/Fonts/YekanBakh.ttf);
+}
+* {
+    font-family: "yekan" !important
+}
+body{
+    background-color: rgb(241, 241, 241);
+}

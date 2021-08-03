@@ -26,9 +26,12 @@ const theme = createMuiTheme({
 const useStyles = makeStyles({
   root: {
     // width: "90%",
-    paddingRight: "50px",
-    marginTop: "100px",
+    padding: "50px",
+    marginTop: "50px",
     flexGrow: 1,
+    backgroundColor:"#fff",
+    borderRadius:"15px",
+    boxShadow:"0 0 15px 0 lightgray"
   },
   container: {
     maxHeight: 440,
@@ -36,6 +39,8 @@ const useStyles = makeStyles({
   media: {
     width: theme.spacing(15),
     height: theme.spacing(20),
+    margin:"auto",
+    marginTop:"15px"
   },
   button:{
     background:"#ffea00",
@@ -93,7 +98,7 @@ function CardProduct({ data, categoryLimit }) {
                           color="textSecondary"
                           component="p"
                         >
-                          قیمت: {pro.price}
+                          قیمت: {pro.price} تومان
                         </Typography>
 
                         <Button

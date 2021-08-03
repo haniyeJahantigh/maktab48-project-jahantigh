@@ -46,7 +46,7 @@ function Main({ data,setData, ...props}) {
     <ThemeProvider theme={theme}>
         <ToastContainer />
         {/* <Slideshow/>    */}
-        <div ><img src={slide2} className={classes.slide}/></div>
+        <div className="Slider"><img src={slide2} className={classes.slide} alt="slide"/></div>
       <Container maxWidth="md">
         <Typography variant="h6">{data.category}</Typography>
         <LimitProduct data={data} setData={setData} categoryLimit="لباس مردانه" classes={classes.container}/>
