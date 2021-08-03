@@ -55,9 +55,9 @@ export default function EditModal({ openEdit, setOpenEdit,filterData}) {
 
   const classes = useStyles();
   // const [image, setImage] = useState(editedObj.image);
-  const [title, setTitle] = useState(filterData.title);
-  const [category, setCategory] = useState(filterData.category);
-  const [description, setDescription] = useState(filterData.description);
+  const [title, setTitle] = useState(filterData?.title);
+  const [category, setCategory] = useState("");
+  const [description, setDescription] = useState("");
 
   const dispatch = useDispatch();
 
@@ -129,7 +129,7 @@ export default function EditModal({ openEdit, setOpenEdit,filterData}) {
                       variant="outlined"
                       size="small"
                       fullWidth
-                      // defaultValue={filterData.title}
+                      defaultValue={filterData?.title}
                     />
                   </Grid>
 

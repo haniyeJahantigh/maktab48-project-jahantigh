@@ -5,6 +5,7 @@ import withLoading from "../../HOC/withLoading";
 import { Grid, Typography, Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { useState } from "react";
+import {updateProduct} from "../../api/productApi"
 
 const theme = createMuiTheme({
   direction: "rtl",
@@ -55,24 +56,28 @@ function StockPrice({ data }) {
   const classes = useStyles();
   const [newDatas,setNewDatas]=useState([])
 
-  const handleClick=async (product) => {
-    console.log("zakhire");
-        try {
-          const res = await fetch("http://localhost:8000/products", {
-            method: "POST",
-            headers: {
-              "Content-type": "application/json",
-            },
-            body: JSON.stringify(product),
-          });
-          const data = await res.json();
-          console.log("data=",data);
-          console.log("res=",res);
-          setNewDatas([...newDatas, data]);
-        } catch (err) {
-          console.log(err);
+  const handleClick= () => {
+    // console.log("zakhire");
+    //     try {
+    //       const res = await fetch("http://localhost:8000/products", {
+    //         method: "POST",
+    //         headers: {
+    //           "Content-type": "application/json",
+    //         },
+    //         body: JSON.stringify(product),
+    //       });
+    //       const data = await res.json();
+    //       console.log("data=",data);
+    //       console.log("res=",res);
+    //       setNewDatas([...newDatas, data]);
+    //     } catch (err) {
+    //       console.log(err);
         
-      };
+    //   };
+      Promise.all(newDatas.map(product => updateProduct(product.id, product)
+      .then(res => console.log(res.data))
+      .catch(err => console.log(err))
+    ))
   }
 
   const handleEditCellChange = ({ id, field, props }) => {
@@ -81,9 +86,9 @@ function StockPrice({ data }) {
     // console.log(updatedObj);
     let obj = data.filter((item) => item.id === id)
 
-    if (updatedObj.field === "amount") {
+    if (updatedObj.field === "stock") {
 
-      obj[0].amount = updatedObj.value
+      obj[0].stock = updatedObj.value
 
     } else {
       obj[0].price = updatedObj.value

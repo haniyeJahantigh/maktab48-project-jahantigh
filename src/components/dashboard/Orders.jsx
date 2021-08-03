@@ -10,12 +10,12 @@ import TableHead from "@material-ui/core/TableHead";
 import { Typography, Grid } from "@material-ui/core";
 import TablePagination from "@material-ui/core/TablePagination";
 import TableRow from "@material-ui/core/TableRow";
-import { useHistory } from "react-router-dom";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import OrderModal from "../../modals/OrderModal";
 import Container from "@material-ui/core/Container";
-import { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { setProducts } from "../../redux/actions/productAction";
 
 const theme = createMuiTheme({
   direction: "rtl",
@@ -65,28 +65,26 @@ const useStyles = makeStyles({
   },
 });
 
-function Orders({ data, ...props }) {
+function Orders({ data }) {
   const classes = useStyles();
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
-  const [open, setOpen] = React.useState(false);
-  const [product, setProduct] = React.useState();
-  const [value, setValue] = React.useState("recived");
-  const [filterData, setFilterData] = React.useState();
 
-  const recivedOrders= data?.filter((order) => order.recived == true);
-  const waitingOrders= data?.filter((order) => order.recived == false)
-  const handleChange = async(event) => {
-    // console.log(event.target);
-   setValue(event.target.value);
+  const [open, setOpen] = React.useState(false);
+  const [product, setProduct] = React.useState(null);
+
+  
+
+  // const orders = useSelector((state) => state.allOrders.orders);
+  // console.log(orders);
+  const recivedOrders= data?.filter((item) => item.recived == true);
+  const waitingOrders= data?.filter((item) => item.recived == false)
+
+  const [value, setValue] = React.useState("recived");
+  const handleChange = (event) => {
+    setValue(event.target.value);
   };
   let datas = value === "recived" ? recivedOrders : waitingOrders;
-//   if (value === "unrecived") {
-//    setFilterData(data?.filter((order) => order.recived == true));
-//    console.log(filterData);
-//  } else {
-//    setFilterData(data?.filter((order) => order.recived == false));
-//  }
 
   const handleChangePage = ( newPage) => {
     setPage(newPage);
@@ -106,10 +104,11 @@ function Orders({ data, ...props }) {
   //     console.error("request failed!");
   //   }
   // };
-  const handleClick = (e) => {
+  const handleClick = (obj) => {
     setOpen(true);
+    setProduct(obj)
     // fetchOrder(e);
-    console.log(e);
+    // console.log(e);
     // const id = e.target.id;
     // setProduct(data.find((item) => item.id === +id));
   };
@@ -129,7 +128,7 @@ function Orders({ data, ...props }) {
             <Typography variant="h6">مدیریت سفارش‌ها</Typography>
           </Grid>
           <Grid item xs={6}>
-            <RadioGroup row value={value} onChange={handleChange}>
+            <RadioGroup row value={value} onChange={handleChange} >
               <FormControlLabel
                 value="recived"
                 control={<Radio />}
@@ -163,47 +162,37 @@ function Orders({ data, ...props }) {
                     {datas ?.slice(
                         page * rowsPerPage,
                         page * rowsPerPage + rowsPerPage
-                      ).map((row) => {
+                      ).map((row,index) => {
                         return (
                           <TableRow
                             hover
-                            role="checkbox"
-                            tabIndex={-1}
-                            key={row?.code}
+                            key={row?.index}
                           >
                             <TableCell
-                              id={row.id}
-                              key={row.id}
                               align="right"
                             >
-                              {row.userName}
+                              {row?.userName}
                             </TableCell>
                             <TableCell
-                              id={row.id}
-                              key={row.id}
                               align="right"
                             >
-                              {row.total}
+                              {Number(row?.total).toLocaleString()}
                             </TableCell>
                             <TableCell
-                              id={row.id}
-                              key={row.id}
                               align="right"
                             >
                               {row?.orderDate}
                             </TableCell>
                             <TableCell
-                              id={row.id}
-                              key={row.id}
-                              align="right"
+                              align="center"
                             >
                               <Button
                                 variant="contained"
-                                id={row.id}
-                                key={row.id}
+                                id={row?.id}
+                                key={row?.id}
                                 color="primary"
                                 href="#contained-buttons"
-                                onClick={(e)=>handleClick(row.id)}
+                                onClick={()=>handleClick(row)}
                               >
                                 بررسی سفارش
                               </Button>
@@ -232,6 +221,7 @@ function Orders({ data, ...props }) {
             setOpen={setOpen}
             setProduct={setProduct}
             product={product}
+            delivered={value}
           />
       </Container>
     </ThemeProvider>

@@ -102,7 +102,8 @@ function Manage({ data,setData, ...props}) {
     setOpenEdit(true);
     console.log(e);
     // setEditedObj(obj)
-    setFilterData(data?.find(item=>item.id === e))
+    setFilterData(data?.filter(item=>item.id === e))
+    console.log(data);
     console.log(filterData);
   }
 

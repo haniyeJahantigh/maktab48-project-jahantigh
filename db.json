@@ -3,15 +3,16 @@
     {
       "id": 1,
       "title": "کوله پشتی لپ تاپ",
-      "price": 250000,
+      "price": "10",
       "description": "Your perfect pack for everyday use and walks in the forest. Stash your laptop (up to 15 inches) in the padded sleeve, your everyday",
       "category": "کیف و کوله پشتی",
-      "image": "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg"
+      "image": "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg",
+      "stock": "10"
     },
     {
       "id": 2,
       "title": "تی شرت مردانه اسلیم فیت ",
-      "price": 200000,
+      "price": "50",
       "description": "Slim-fitting style, contrast raglan long sleeve, three-button henley placket, light weight & soft fabric for breathable and comfortable wearing. And Solid stitched shirts with round neck made for durability and a great fit for casual fashion wear and diehard baseball fans. The Henley style round neckline includes a three-button placket.",
       "category": "لباس مردانه",
       "image": "https://fakestoreapi.com/img/71-3HjGNDUL._AC_SY879._SX._UX._SY._UY_.jpg",
@@ -29,11 +30,11 @@
     {
       "id": 4,
       "title": "اسلیم فیت مردانه",
-      "price": 240000,
+      "price": "10",
       "description": "The color could be slightly different between on the screen and in practice. / Please note that body builds vary by person, therefore, detailed size information should be reviewed below on the product description.",
       "category": "لباس مردانه",
       "image": "https://fakestoreapi.com/img/71YXzeOuslL._AC_UY879_.jpg",
-      "stock": 0
+      "stock": "30"
     },
     {
       "id": 5,
@@ -191,12 +192,16 @@
     {
       "title": "مانتو",
       "description": "شسذشیس",
-      "id": 29
+      "id": 29,
+      "price": "200000",
+      "stock": "30"
     },
     {
       "title": "کوله لپ تاپ",
       "description": "ضد آب",
-      "id": 30
+      "id": 30,
+      "price": "450000",
+      "stock": "10"
     },
     {
       "title": "شال",
