@@ -74,28 +74,21 @@ function Orders({ data, ...props }) {
   const [value, setValue] = React.useState("recived");
   const [filterData, setFilterData] = React.useState();
 
-  
-  const handleChange = (event) => {
-    console.log(event.target);
-    setValue(event.target.value);
-    // const handlefilter=()=>{
-    if (value == "unrecived") {
-      setFilterData(data.filter((order) => order.recived == true));
-      console.log(filterData);
-    } else {
-      setFilterData(data.filter((order) => order.recived == false));
-    }
-    // }
+  const recivedOrders= data?.filter((order) => order.recived == true);
+  const waitingOrders= data?.filter((order) => order.recived == false)
+  const handleChange = async(event) => {
+    // console.log(event.target);
+   setValue(event.target.value);
   };
+  let datas = value === "recived" ? recivedOrders : waitingOrders;
+//   if (value === "unrecived") {
+//    setFilterData(data?.filter((order) => order.recived == true));
+//    console.log(filterData);
+//  } else {
+//    setFilterData(data?.filter((order) => order.recived == false));
+//  }
 
-  //   const totalPrice = subtotal(data.products)
-  const totalPrice = () => {
-    const item = data.products;
-    console.log(data.products);
-    return item.map(({ price }) => price).reduce((sum, i) => sum + i, 0);
-  };
-
-  const handleChangePage = (event, newPage) => {
+  const handleChangePage = ( newPage) => {
     setPage(newPage);
   };
   const handleChangeRowsPerPage = (event) => {
@@ -167,52 +160,50 @@ function Orders({ data, ...props }) {
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {filterData
-                      ?.slice(
+                    {datas ?.slice(
                         page * rowsPerPage,
                         page * rowsPerPage + rowsPerPage
-                      )
-                      .map((datas) => {
+                      ).map((row) => {
                         return (
                           <TableRow
                             hover
                             role="checkbox"
                             tabIndex={-1}
-                            key={datas.code}
+                            key={row?.code}
                           >
                             <TableCell
-                              id={datas.id}
-                              key={datas.id}
+                              id={row.id}
+                              key={row.id}
                               align="right"
                             >
-                              {datas.userName}
+                              {row.userName}
                             </TableCell>
                             <TableCell
-                              id={datas.id}
-                              key={datas.id}
+                              id={row.id}
+                              key={row.id}
                               align="right"
                             >
-                              {totalPrice}
+                              {row.total}
                             </TableCell>
                             <TableCell
-                              id={datas.id}
-                              key={datas.id}
+                              id={row.id}
+                              key={row.id}
                               align="right"
                             >
-                              {datas.orderDate}
+                              {row?.orderDate}
                             </TableCell>
                             <TableCell
-                              id={datas.id}
-                              key={datas.id}
+                              id={row.id}
+                              key={row.id}
                               align="right"
                             >
                               <Button
                                 variant="contained"
-                                id={datas.id}
-                                key={datas.id}
+                                id={row.id}
+                                key={row.id}
                                 color="primary"
                                 href="#contained-buttons"
-                                onClick={(e)=>handleClick(datas.id)}
+                                onClick={(e)=>handleClick(row.id)}
                               >
                                 بررسی سفارش
                               </Button>

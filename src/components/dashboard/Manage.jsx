@@ -77,10 +77,13 @@ function Manage({ data,setData, ...props}) {
   const [open, setOpen] = React.useState(false);
   const [openEdit, setOpenEdit] = React.useState(false);
   const [product, setProduct] = React.useState();
+  const [editedObj, setEditedObj] = useState(null);
+
+  const [filterData,setFilterData]=useState()
 
 
   //pagination   ***************************************************************
-  const handleChangePage = (event, newPage) => {
+  const handleChangePage = (newPage) => {
     setPage(newPage);
   };
   const handleChangeRowsPerPage = (event) => {
@@ -88,12 +91,6 @@ function Manage({ data,setData, ...props}) {
     setPage(0);
   };
 
-  // useEffect(() => {
-  //   const getProducts= async()=>{
-  //     setData(data)
-  //   }
-  //   getProducts()
-  // }, [])
 
   //open modal for add new product ***************************************************************
   const handleClick = () => {
@@ -104,9 +101,9 @@ function Manage({ data,setData, ...props}) {
   function handleEditModal(e) {
     setOpenEdit(true);
     console.log(e);
-    // console.log(e.target.id);
-    // const id= e.target.id
-    // setData(data?.find(item=>item.id === e))
+    // setEditedObj(obj)
+    setFilterData(data?.find(item=>item.id === e))
+    console.log(filterData);
   }
 
   //add a new product ***************************************************************
@@ -254,8 +251,9 @@ function Manage({ data,setData, ...props}) {
               <EditModal
                 openEdit={openEdit}
                 setOpenEdit={setOpenEdit}
-                setData={setData}
-                data={data}
+                filterData={filterData}
+                // data={data}
+                // setData={setData}
               />
             </Paper>
           </Grid>

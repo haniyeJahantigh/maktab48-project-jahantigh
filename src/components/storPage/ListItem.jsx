@@ -13,7 +13,7 @@ import HomeIcon from '@material-ui/icons/Home';
 import {  useHistory } from "react-router-dom";
 
 
-const drawerWidth = 155;
+const drawerWidth = 140;
 const theme = createMuiTheme({
     direction: "rtl",
   });
@@ -65,11 +65,7 @@ const SideBar = ({open,setOpen})=>{
         history.push("/accesorys");
         console.log("accesory");
       }  
-    const handleMain=(e)=>{
-        e.preventDefault();
-        history.push("/");
-        console.log("main");
-      }  
+    
     return(
         <ThemeProvider theme={theme}>   
   <div>
@@ -88,12 +84,6 @@ const SideBar = ({open,setOpen})=>{
           </IconButton>
           دسته بندیها
         </div>
-        <ListItem button onClick={handleMain}>
-        <ListItemIcon>
-        <HomeIcon />
-      </ListItemIcon>
-      <ListItemText primary="صفحه اصلی" />
-    </ListItem>
         <ListItem button onClick={handleMen}>
         <ListItemIcon>
         <InsertEmoticonIcon />

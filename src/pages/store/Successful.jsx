@@ -11,10 +11,10 @@ const useStyles = makeStyles({
         marginTop:"100px"
     },
     img: {
-        objectFit: "contain",
+        // objectFit: "contain",
         objectPosition:"right",
         height: "60%",
-        width: "60%",
+        width: "50%",
         margin:"auto",
         alignItems:"center"
     },
@@ -25,7 +25,7 @@ const useStyles = makeStyles({
         margin:"auto"
     },
     title:{
-        textAlign:"right"
+        textAlign:"center"
     }
   });
 const Successful = () => {

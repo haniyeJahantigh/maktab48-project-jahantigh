@@ -21,6 +21,9 @@ const useStyles = makeStyles({
         width: "100%",
         margin: "auto"
     },
+    title:{
+        textAlign:"center"
+    }
   });
 const Faild = () => {
     const classes = useStyles();
@@ -37,11 +40,11 @@ const Faild = () => {
                     <Grid xs={12} md={6}>
                         <Box className={classes.box}><img className={classes.img} src={failed} alt=" پرداخت ناموفق" /></Box>
                     </Grid>
-                    <Grid  xs={12} md={6}>
+                    <Grid  xs={12} md={6} alignItems="center" className={classes.title}>
                     <Typography variant="h6">
                         پرداخت ناموفق! سفارش شما در حال انتظار است 
                      </Typography>
-                        <Button onClick={handleGoToHome} color="primary">بازگشت به سایت </Button>
+                        <Button onClick={handleGoToHome} color="primary" variant="contained">بازگشت به سایت </Button>
                     </Grid>
                 </Grid>
                 

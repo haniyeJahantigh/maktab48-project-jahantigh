@@ -20,7 +20,7 @@ import { useSelector } from 'react-redux';
 const theme = createMuiTheme({
   direction: "rtl",
 });
-const drawerWidth = 155;
+const drawerWidth = 140;
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -33,6 +33,7 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     flexGrow: 1,
+    cursor:"pointer"
   },
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
@@ -75,6 +76,11 @@ const Header = ({open,setOpen}) => {
   const handleDrawerOpen = () => {
     setOpen(true);
   };
+  const handleMain=(e)=>{
+    e.preventDefault();
+    history.push("/");
+    console.log("main");
+  }  
   return (
     <ThemeProvider theme={theme}>
       <div className={classes.root}>
@@ -89,7 +95,7 @@ const Header = ({open,setOpen}) => {
           >
             <MenuIcon />
           </IconButton>
-            <Typography variant="h6" className={classes.title}>
+            <Typography variant="h6" className={classes.title} onClick={handleMain} >
               فروشگاه
             </Typography>
 

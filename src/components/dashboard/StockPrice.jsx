@@ -38,14 +38,12 @@ const columns = [
     field: "price",
     headerName: "قیمت",
     width: 150,
-    // type: "number",
     editable: true,
     alighn: "left",
   },
   {
     field: "stock",
     headerName: "موجودی",
-    // type: "number",
     width: 150,
     editable: true,
     alighn: "right",
@@ -53,6 +51,7 @@ const columns = [
 ];
 
 function StockPrice({ data }) {
+  
   const classes = useStyles();
   const [newDatas,setNewDatas]=useState([])
 
@@ -75,6 +74,24 @@ function StockPrice({ data }) {
         
       };
   }
+
+  const handleEditCellChange = ({ id, field, props }) => {
+
+    let updatedObj = { field, value: props.value }
+    // console.log(updatedObj);
+    let obj = data.filter((item) => item.id === id)
+
+    if (updatedObj.field === "amount") {
+
+      obj[0].amount = updatedObj.value
+
+    } else {
+      obj[0].price = updatedObj.value
+    }
+
+    setNewDatas([...newDatas, ...obj])
+
+  }
   return (
     <ThemeProvider theme={theme}>
       <div style={{ height: 400, width: "70%" }} className={classes.root} dir="rtl">
@@ -95,6 +112,7 @@ function StockPrice({ data }) {
               color="primary"
               href="#contained-buttons"
               onClick={handleClick}
+              disabled={newDatas.length === 0}
             >
               ذخیره
             </Button>
@@ -109,7 +127,8 @@ function StockPrice({ data }) {
           // disableSelectionOnClick
           showCellRightBorder
           MuiDataGrid-cell--textLeft ={false}
-          
+          hideFooterSelectedRowCount={true}
+          onEditCellChangeCommitted={handleEditCellChange}
         />
       </div>
     </ThemeProvider>

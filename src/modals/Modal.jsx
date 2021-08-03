@@ -1,9 +1,9 @@
 import React,{useState} from "react";
 import CancelIcon from "@material-ui/icons/Cancel";
+import { useFilePicker } from "use-file-picker";
 import { Typography, Grid,Button,TextField, MenuItem,Input,Modal,Backdrop,Fade,Container} from "@material-ui/core";
 import { createMuiTheme, ThemeProvider,makeStyles } from "@material-ui/core/styles";
 import imageToBase64 from 'image-to-base64/browser';
-// import {addDatafetch} from '../api/addDatafetch'
 
 const theme = createMuiTheme({
   direction: "rtl",
@@ -33,6 +33,10 @@ const category = [
     value: "لباس زنانه",
     label: "لباس زنانه",
   },
+  {
+    value: "کیف و کوله‌پشتی",
+    label: "کیف و کوله‌پشتی",
+  },
 ];
 
 export default function AddModal({ open, setOpen, props,add }) {
@@ -40,9 +44,32 @@ export default function AddModal({ open, setOpen, props,add }) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [cat, setCat] = useState("");
+  const [price, setPrice] = useState("");
+  const [stock, setStock] = useState("");
   const [imagePro, setImagePro] = useState("");
 
-
+ /*
+   * 'use-file-picker' react hook for select file.
+  */
+ const [openFileSelector, { filesContent }] = useFilePicker({
+  readAs: "DataURL",
+  accept: "image/*",
+  multiple: true,
+  // limitFilesConfig: { max: 1 },
+  // minFileSize: 0.1, // in megabytes
+  // maxFileSize: 50,
+  // imageSizeRestrictions: {
+  //   maxHeight: 900, // in pixels
+  //   maxWidth: 1600,
+  //   minHeight: 600,
+  //   minWidth: 768,
+  // },
+});
+let image= filesContent[0]?.content
+/*
+* use output 'use-file-picker'
+*/
+//   console.log(filesContent[0]?.content);
 
   const handleClose = () => {
     setOpen(false);
@@ -51,14 +78,17 @@ export default function AddModal({ open, setOpen, props,add }) {
   const handleAddProduct=(e)=>{
     e.preventDefault();
     setOpen(false);
-
-    add({title,description});
+ setImagePro(filesContent[0]?.content)
+    add({title,description,cat,price,stock,imagePro});
 
     console.log(title);
     console.log(description);
 
     setTitle("");
-    setDescription("")
+    setDescription("");
+    setCat('');
+    setPrice("");
+    setStock("")
     console.log('add new pro');
   }
   
@@ -105,7 +135,7 @@ imageToBase64("e.target.value") // Path to the image
                     <CancelIcon onClick={handleClose} />
                   </Grid>
                   
-                  <Grid item xs={12}  maxWidth="lg">
+                  {/* <Grid item xs={12}  maxWidth="lg">
                     <Input
                       label="تصویر کالا"
                       type="file"
@@ -114,11 +144,43 @@ imageToBase64("e.target.value") // Path to the image
                       variant="outlined"
                       size="small"
                       fullWidth
-                      onChange={handleImage}
-
+                      value={imagePro}
+                      onChange={(e) => setImagePro(e.target.value)}
                     />
-                  
-                  </Grid>
+                  </Grid> */}
+                  <Grid
+              justify="space-between"
+              alignItems="center"
+              xs={12}
+              item
+              container
+            >
+                  <Grid item xs={10}>
+                <TextField
+                  variant="outlined"
+                  placeholder=" تصویر کالا"
+                  name="image"
+                  // margin="normal"
+                  // disabled
+                  fullWidth
+                  value={imagePro}
+                  onChange={(e) => setImagePro(e.target.value)}
+
+                />
+              </Grid>
+              <Grid item xs={2}>
+                <Button
+                  type="button"
+                  onClick={() => {
+                    openFileSelector();
+                  }}
+                  className={classes.btnFile}
+                >
+                  Browse
+              </Button>
+              </Grid>
+            </Grid>
+
                   <Grid item xs={12} maxWidth="lg">
                     <TextField
                       label="نام کالا"
@@ -135,11 +197,12 @@ imageToBase64("e.target.value") // Path to the image
                     <TextField
                       fullWidth
                       id="sort"
+                      size="small"
                       select
                       label="دسته بندی"
                       helperText="Please select your category"
                       variant="outlined"
-                      // value={cat}
+                      value={cat}
                       onChange={(e)=> setCat(e.target.value)}
                     >
                       {category.map((option) => (
@@ -148,6 +211,29 @@ imageToBase64("e.target.value") // Path to the image
                         </MenuItem>
                       ))}
                     </TextField>
+                  </Grid>
+                  
+                  <Grid item xs={12} maxWidth="lg">
+                    <TextField
+                      id="outlined-multiline-static"
+                      label="قیمت"
+                      size="small"
+                      variant="outlined"
+                      fullWidth
+                      value={price}
+                      onChange={(e)=>setPrice(e.target.value)}
+                    />
+                  </Grid>
+                  <Grid item xs={12} maxWidth="lg">
+                    <TextField
+                      id="outlined-multiline-static"
+                      label="موجودی"
+                      size="small"
+                      variant="outlined"
+                      fullWidth
+                      value={stock}
+                      onChange={(e)=>setStock(e.target.value)}
+                    />
                   </Grid>
                   <Grid item xs={12} maxWidth="lg">
                     <TextField

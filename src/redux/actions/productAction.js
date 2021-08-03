@@ -1,4 +1,4 @@
-import {  getAllProducts,getAProductById } from "../../api/productApi";
+import {  getAllProducts,getAProductById,addedProduct,updateProduct } from "../../api/productApi";
 import { ActionTypes } from "../constats/action-type";
 
 /*
@@ -31,7 +31,7 @@ export function removeProduct(id) {
     payload: id,
   };
 };
-export function updateProduct(updatedProduct) {
+export function updateProductAction(updatedProduct) {
   return {
     type: ActionTypes.UPDATE_PRODUCT,
     payload: updatedProduct
@@ -62,28 +62,22 @@ export const getAProduct = (id) => async (dispatch) => {
   dispatch(selectProduct(res.data));
 };
 
-// /*
-//  * async action for add new product
-//  */
+/*
+ * async action for add new product
+ */
 
-// export const addNewProduct = (newProduct) => async (dispatch, getState) => {
-//   let res = await addedProduct(newProduct);
-//   dispatch(addProduct(newProduct));
-// };
+export const addNewProduct = (newProduct) => async (dispatch, getState) => {
+  let res = await addedProduct(newProduct);
+  dispatch(addProduct(newProduct));
+};
 
-// /*
-//  * async action for delete product
-//  */
-// export const deleteProductById = (id) => async (dispatch, getState) => {
-//   let res = await deleteProduct(id);
-//   dispatch(removeProduct(id));
-// };
-// /*
-//  * async action for update product
-//  */
-// export const updateProductById = (id, updatedProduct) => async (dispatch, getState) => {
-//   let res = await updateProduct(id, updatedProduct);
 
-//   dispatch(updateProductAct(updateProduct));
-// };
+/*
+ * async action for update product
+ */
+export const updateProductById = (id, updatedProduct) => async (dispatch, getState) => {
+  let res = await updateProduct(id, updatedProduct);
+
+  dispatch(updateProductAction(updateProduct));
+};
 

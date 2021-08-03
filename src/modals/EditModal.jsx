@@ -1,5 +1,7 @@
-import React,{useEffect} from "react";
+import React,{useEffect,useState} from "react";
 import { makeStyles } from "@material-ui/core/styles";
+import { useFilePicker } from "use-file-picker";
+import { useDispatch } from "react-redux";
 import Modal from "@material-ui/core/Modal";
 import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
@@ -13,6 +15,7 @@ import {
 } from "@material-ui/core";
 import Container from "@material-ui/core/Container";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
+import { updateProductById } from "../redux/actions/productAction";
 
 const theme = createMuiTheme({
   direction: "rtl",
@@ -33,38 +36,48 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const category = [
+  
   {
-    value: "electronics",
-    label: "electronics",
+    value: "لباس مردانه",
+    label: "لباس مردانه",
   },
   {
-    value: "jewelery",
-    label: "jewelery",
+    value: "لباس زنانه",
+    label: "لباس زنانه",
   },
   {
-    value: "men clothing",
-    label: "men clothing",
-  },
-  {
-    value: "women clothing",
-    label: "women clothing",
+    value: "کیف و کوله‌پشتی",
+    label: "کیف و کوله‌پشتی",
   },
 ];
 
-export default function EditModal({ openEdit, setOpenEdit,data,setData, props}) {
+export default function EditModal({ openEdit, setOpenEdit,filterData}) {
+
   const classes = useStyles();
-  const [currency, setCurrency] = React.useState("EUR");
-  
-  //   const [open, setOpen] = React.useState(false);
-  //   const [close, setClose] = React.useState(false);
+  // const [image, setImage] = useState(editedObj.image);
+  const [title, setTitle] = useState(filterData.title);
+  const [category, setCategory] = useState(filterData.category);
+  const [description, setDescription] = useState(filterData.description);
+
+  const dispatch = useDispatch();
+
+  const [openFileSelector, { filesContent }] = useFilePicker({
+    readAs: "DataURL",
+    accept: "image/*",
+    multiple: true,
+  });
+ 
   const handleChange = (event) => {
-    setCurrency(event.target.value);
+    
   };
   const handleClose = () => {
     setOpenEdit(false);
   };
 
   const handleAddProduct=()=>{
+    let updatedProductObj = { ...filterData, title, category, description };
+    console.log(updatedProductObj);
+    dispatch(updateProductById(filterData.id, updatedProductObj))
     setOpenEdit(false);
     console.log('add new pro');
   }
@@ -116,7 +129,7 @@ export default function EditModal({ openEdit, setOpenEdit,data,setData, props}) 
                       variant="outlined"
                       size="small"
                       fullWidth
-                      defaultValue={data.title}
+                      // defaultValue={filterData.title}
                     />
                   </Grid>
 
@@ -126,11 +139,11 @@ export default function EditModal({ openEdit, setOpenEdit,data,setData, props}) 
                       id="sort"
                       select
                       label="دسته بندی"
-                      value={currency}
+                      value={category}
                       onChange={handleChange}
                       helperText="Please select your category"
                       variant="outlined"
-                      defaultValue={data.category}
+                      // defaultValue={filterData.category}
                     >
                       
                     </TextField>
@@ -143,7 +156,7 @@ export default function EditModal({ openEdit, setOpenEdit,data,setData, props}) 
                       rows={4}
                       variant="outlined"
                       fullWidth
-                      defaultValue={data.description}
+                      // defaultValue={filterData.description}
                     />
                   </Grid>
                   <Grid

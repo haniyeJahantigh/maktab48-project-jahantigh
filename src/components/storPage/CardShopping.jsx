@@ -15,18 +15,11 @@ const useStyles = makeStyles({
   root: {
     width: "90%",
     padding: "auto",
-    margin: " auto",
+    marginRight: " 150px",
     marginTop: "100px",
-  },
-  image: {
-    width: theme.spacing(15),
-    height: theme.spacing(20),
   },
   container: {
     maxHeight: 440,
-  },
-  toppading: {
-    marginTop: "20px",
   },
   empty:{
     height:"200px",
@@ -71,7 +64,7 @@ export default function CardShopping({ data }) {
               <Grid item xs={12} className={classes.footer}>
                 <Paper>
                   <TableContainer className={classes.container} dir="rtl">
-                    <Table stickyHeader aria-label="sticky table">
+                    <Table stickyHeader aria-label="sticky table" size="small">
                       <TableHead>
                         <TableRow>
                         <TableCell align="right">کالا</TableCell>
@@ -113,7 +106,7 @@ export default function CardShopping({ data }) {
                                 <TableCell
                                   id={row.id}
                                   key={row.id}
-                                  align="right"
+                                  align="center"
                                 >
                                   <Button
                                     variant="contained"
@@ -136,17 +129,17 @@ export default function CardShopping({ data }) {
               </Grid>
               <Grid container className={classes.footer}>
               <Grid item xs={9}>
-                <Typography variant="h6">جمع : {total.toLocaleString()} تومان</Typography>
+                <Typography >جمع : {total.toLocaleString()} تومان</Typography>
               </Grid>
 
-              <Grid item xs={3}>
+              <Grid item xs={3} align="center">
                 <Button
                   variant="contained"
                   color="primary"
                   href="#contained-buttons"
                   onClick={handleGoToFinal}
                 >
-                  نهایی کردن سبد خرید
+                  نهایی کردن  
                 </Button>
               </Grid>
               </Grid>
@@ -166,4 +159,3 @@ export default function CardShopping({ data }) {
     </ThemeProvider>
   );
 }
-// export default withLoading(CardShopping, "http://localhost:8000/orders");
